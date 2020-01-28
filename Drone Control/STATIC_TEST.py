@@ -24,7 +24,7 @@ class RPM:
         rpmav = np.array([0])   # Array to store rpms to take average from
         zero = 0                # Set low counters to zero
         start = time.time()     # Use to determine number of readings per second
-        prevtime = time.time()       # Determine gap between revolutions
+        prevtime = time.time()  # Determine gap between revolutions
 
         while True:
             # Get sensor reading from GPIO pin (high or low)
@@ -100,7 +100,7 @@ class loadcell:
 
             Ax = calin*gravity/calout
 
-        except SyntaxError:
+        except SyntaxError: # User hits ENTER, enabling use of previous calibration values
             calin = self.calweight
             print("Calibration weight set to default (309.5g)")
             Ax = self.calfactor
