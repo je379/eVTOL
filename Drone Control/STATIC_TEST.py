@@ -79,7 +79,7 @@ class RPM:
         return av
 
 class loadcell:
-    def __init__(self, pins=[24,23], units='mN',calweight=309.5, calfactor=-0.00320306508155):
+    def __init__(self, pins=[24,23], units='mN',calweight=309.5, calfactor=-0.00321221133216):
         self.pins = pins
         self.units = units
         self.calweight = calweight

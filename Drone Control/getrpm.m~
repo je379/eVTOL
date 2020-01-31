@@ -1,5 +1,7 @@
 %% LOAD IN RPM DATA FIRST (Raw ADC output)
 clear all;
+close all;
+
 importrpm;
 [pks ind] = findpeaks(RPM);
 
@@ -9,8 +11,10 @@ ind = ind(pks > 0.8);
 n = length(ind);
 timerpm = time2(ind);
 
-voltage = 11.82;
-current = 8.00;
+voltage = 11.;
+current = 170/voltage;
+
+systemresist = voltage/current;
 %% FIDDLE
 
 % load('RPMTEST.mat'); % RPM RAW TEST DATA
@@ -43,7 +47,7 @@ for i = 1+averagewindow:f-averagewindow+1
 end
 
 %%
-averagewindow = 5;
+averagewindow = 2;
 
 k = length(rpmmeasure);
 
@@ -51,15 +55,22 @@ liml = averagewindow;
 limh = averagewindow-1;
 
 for l = 1+averagewindow:k-averagewindow+1
-    rpmmeasure(l) =  (sum(rpmmeasure(l-liml:l+limh-1)) / (2*averagewindow));
+    rpmmeasure(l) =  (sum(rpmmeasure(l-liml:l+limh-1)) / (2*averagewindow - 1));
 end
 
 %% PLOT
-figure(2); hold on; plot(timerpm, rpmmeasure);
-save('OUTPUT');
+rpmmean = mean(rpmmeasure(2000:end))
 
-nd_thr = thr/max(thr);
-nd_rpm = rpmmeasure/max(rpmmeasure);
+P = voltage*current;
+T = mean(thr(150000:end))/1000;
+A = 0.0092;
+rho = 1.225;
 
-figure(3); subplot(2,1,1); plot(timerpm, nd_rpm); 
-subplot(2,1,2); plot(time2, nd_thr);
+FOM = (T/P)*sqrt(T/(2*A*rho))
+
+mass = 1000*T/9.81
+
+figure(1); subplot(2,1,1); hold on; plot(timerpm, rpmmeasure); plot([0 max(timerpm)], [rpmmean rpmmean]); title('RPM'); xlabel('Time'); ylabel('RPM');
+subplot(2,1,2); hold on; plot([0 max(time2)], [1000*T/9.81 1000*T/9.81]); plot(time2, thr/9.81);title('Thrust (in grams)'); xlabel('Time'); ylabel('grams');
+
+save('OP_SIG12_3', 'FOM', 'rpmmean', 'P', 'T', 'mass');

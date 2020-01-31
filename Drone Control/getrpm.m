@@ -11,8 +11,10 @@ ind = ind(pks > 0.8);
 n = length(ind);
 timerpm = time2(ind);
 
-voltage = 16.56;
-current = 200/voltage;
+voltage = 11.82;
+current = 88/voltage;
+
+systemresist = voltage/current;
 %% FIDDLE
 
 % load('RPMTEST.mat'); % RPM RAW TEST DATA
@@ -57,13 +59,18 @@ for l = 1+averagewindow:k-averagewindow+1
 end
 
 %% PLOT
+rpmmean = mean(rpmmeasure(2000:end))
+
 P = voltage*current;
-T = mean(thr(150000:end-150000))/1000;
+T = mean(thr(150000:end))/1000;
 A = 0.0092;
 rho = 1.225;
 
 FOM = (T/P)*sqrt(T/(2*A*rho))
 
-figure(1); subplot(2,1,1); plot(timerpm, rpmmeasure); title('RPM'); xlabel('Time'); ylabel('RPM');
-subplot(2,1,2); hold on; plot([0 max(time2)], [1000*T 1000*T]); plot(time2, thr);title('Thrust'); xlabel('Time'); ylabel('mN');
+mass = 1000*T/9.81
 
+figure(1); subplot(2,1,1); hold on; plot(timerpm, rpmmeasure); plot([0 max(timerpm)], [rpmmean rpmmean]); title('RPM'); xlabel('Time'); ylabel('RPM');
+subplot(2,1,2); hold on; plot([0 max(time2)], [1000*T/9.81 1000*T/9.81]); plot(time2, thr/9.81);title('Thrust (in grams)'); xlabel('Time'); ylabel('grams');
+
+save('OP_SIG08_3', 'FOM', 'rpmmean', 'P', 'T', 'mass');
