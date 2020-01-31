@@ -1,0 +1,65 @@
+%% LOAD IN RPM DATA FIRST (Raw ADC output)
+clear all;
+importrpm;
+[pks ind] = findpeaks(RPM);
+
+time2 = linspace(0,max(time),length(time));
+
+ind = ind(pks > 0.8);
+n = length(ind);
+timerpm = time2(ind);
+
+voltage = 11.82;
+current = 8.00;
+%% FIDDLE
+
+% load('RPMTEST.mat'); % RPM RAW TEST DATA
+
+averagewindow = 1;
+
+lim = averagewindow;
+timerpm = timerpm(lim:end-lim);
+
+for j = 1:n-1
+    separation(j) = (time2(ind(j+1)) - time2(ind(j)));
+end
+
+timerpm(separation<0.002) = [];
+separation(separation<0.002) = [];
+
+f = length(separation);
+
+averagewindow = 5;
+
+for i = 1+averagewindow:f-averagewindow+1
+    separation(i) = (sum(separation(i-averagewindow:i+averagewindow-1))/(2*averagewindow));
+end
+
+frequency = 1./separation;
+rpmmeasure = zeros([1, f]);
+
+for i = 1+averagewindow:f-averagewindow+1
+    rpmmeasure(i) =  0.5 * 60 * (sum(frequency(i-averagewindow:i+averagewindow-1))/(2*averagewindow));
+end
+
+%%
+averagewindow = 5;
+
+k = length(rpmmeasure);
+
+liml = averagewindow;
+limh = averagewindow-1;
+
+for l = 1+averagewindow:k-averagewindow+1
+    rpmmeasure(l) =  (sum(rpmmeasure(l-liml:l+limh-1)) / (2*averagewindow));
+end
+
+%% PLOT
+figure(2); hold on; plot(timerpm, rpmmeasure);
+save('OUTPUT');
+
+nd_thr = thr/max(thr);
+nd_rpm = rpmmeasure/max(rpmmeasure);
+
+figure(3); subplot(2,1,1); plot(timerpm, nd_rpm); 
+subplot(2,1,2); plot(time2, nd_thr);

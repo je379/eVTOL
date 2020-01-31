@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 import numpy as np
 import time
 import sys
+import os
 
 class RPM:
     def __init__(self, signalpin):
@@ -16,14 +17,32 @@ class RPM:
     def get_state(self):
         return GPIO.input(self.outpin)
 
-    def get_rpm(self, readings=10, lowcount=30)
+    def count_rate(self, timeout=5):
+        print(" ")
+        print(" ")
+        print("Getting sample rate...")
+        print("### PLEASE WAIT ###")
+        
+        start = time.time()
+        n = 0
+        elapsed = time.time() - start
+
+        while elapsed < timeout:
+            x = self.get_state()
+            n += 1
+            elapsed = time.time()-start
+        
+        final = time.time() - start
+        readpersec = n/final
+
+        return readpersec
+
+    def get_rpm(self, readings=10, lowcount=100):
         thresh = readings-1     # Number of readings to average
-        n = 0                   # Count number of readings taken
         r = 0                   # Count number of revolutions
         av = 0                  # Average number of revs (in 10)
-        rpmav = np.array([0])   # Array to store rpms to take average from
+        rpmav = np.array([0,0,0,0,0,0,0,0,0,0])   # Array to store rpms to take average from
         zero = 0                # Set low counters to zero
-        start = time.time()     # Use to determine number of readings per second
         prevtime = time.time()  # Determine gap between revolutions
 
         while True:
@@ -46,7 +65,7 @@ class RPM:
                         av = int(np.mean(rpmav))
                         break
                     else:
-                        r1 += 1
+                        r += 1
 
                     # Calculate RPM
                     rpm = 60*(1/revtime)
@@ -57,19 +76,10 @@ class RPM:
                 # Reset zero counter
                 zero = 0
 
-            # Count readings
-            n += 1
-        
         return av
 
-    def cleanAndExit():
-        print("Cleaning RPM...")
-        GPIO.cleanup()
-        print("DONE")
-        sys.exit()
-
 class loadcell:
-    def __init__(self, pins=[24,23], units='mN',calweight=309.5, calfactor=-0.00390069915156)
+    def __init__(self, pins=[24,23], units='mN',calweight=309.5, calfactor=-0.00320306508155):
         self.pins = pins
         self.units = units
         self.calweight = calweight
@@ -85,56 +95,92 @@ class loadcell:
         print("Tare done. Add weight now...")
 
         try:
-            calin = input("Weight added (grams/ [ ENTER for default ] ): ")
+            self.calin = input("Weight added (grams/ [ ENTER for default ] ): ")
             gravity = 9.81
 
-            print "____"
-            print "Input Weight = %f grams" % calin
+            print("____")
+            print("Input Weight = %f grams" % self.calin)
             # to use both channels, you'll need to tare them both
             #hx.tare_A()
             #hx.tare_B()
 
-            calout = self.lc.get_weight(5)
-            print "Raw Value = %f" % calout
+            self.calout = self.lc.get_weight(5)
+            print("Raw Value = %f" % self.calout)
             # y = Ax + B - Assume B set by tare. Therefore A...
 
-            Ax = calin*gravity/calout
+            self.Ax = self.calin*gravity/self.calout
 
         except SyntaxError: # User hits ENTER, enabling use of previous calibration values
-            calin = self.calweight
+            self.calin = self.calweight
             print("Calibration weight set to default (309.5g)")
-            Ax = self.calfactor
+            self.Ax = self.calfactor
 
-        print "Calibration factor = %s " % Ax
+        print("Calibration factor = %s " % self.Ax)
 
-    def thrust(times=10):
+    def thrust(self, times=1):
         val = self.lc.get_weight(times)
-        force = val*Ax
+        force = val*self.Ax
 
         self.lc.power_down()
         self.lc.power_up()
 
         return force
 
-    def cleanAndExit():
-        print("Cleaning loadcell...")
-        GPIO.cleanup()
-        print("DONE")
-        sys.exit()
+def cleanAndExit():
+    print(" ")
+    print(" ")
+    print("Cleaning GPIO...")
+    GPIO.cleanup()
+    print("DONE")
+    sys.exit()
 
 # SETUP
-rpm     = RPM(5)
+rpm     = RPM(18)
 thr     = loadcell()
+
+
+
+filename = "STATIC_TEST.txt"
+os.system("rm STATIC_TEST.txt")
+
+currentthr = thr.thrust()
+rpmstate = rpm.get_state()
+
+
+
+sys.stdout.write('\nForce = %.4e %s    RPM = %i         \n' % (currentthr, thr.units, rpmstate))
+
+num = 0
+start = time.time()
+now = time.time() - start
 
 while True:
     try:
-        currentrpm = rpm.get_rpm()
-        currentthr = thr.thrust()
+        rpmstate = rpm.get_state()
+        
+        if num == 5000:
+            now = time.time() - start
+            currentthr = thr.thrust()
+            num = 0
+        
+        line = str(now) + "," + str(rpmstate) + "," + str(currentthr) + " \n"
+        
+        # Save RPMs to file
+        with open(filename, "a") as myfile:
+            myfile.write(line)
 
-        sys.stdout.write('\rForce = %.4e %s    RPM = %i         ' % (currentthr, force.units, currentrpm))
-        sys.stdout.flush()
+        # sys.stdout.write('\rForce = %.4e %s    RPM = %i         ' % (currentthr, thr.units, currentrpm))
+        # sys.stdout.flush()
+        num += 1
 
-    except (KeyboardInterrupt, SystemExit):
-        rpm.cleanAndExit()
-        thr.cleanAndExit()
+    except KeyboardInterrupt:
+        
+        elapsed = time.time() - start
+        line = str(elapsed) + "," + str(rpmstate) + "," + str(currentthr) + " \n"
+        
+        # Save RPMs to file
+        with open(filename, "a") as myfile:
+            myfile.write(line)
+
+        cleanAndExit()
         break
