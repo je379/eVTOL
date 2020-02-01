@@ -1,0 +1,7 @@
+open('EXP_DATA.mat');
+
+close all;
+
+figure(101); hold on; plot(sig08.RPM, sig08.mass, '-');plot(sig10.RPM, sig10.mass, '-');plot(sig12.RPM, sig12.mass);  title('Mass vs RPM'); xlabel('RPM'); ylabel('Mass');
+figure(102); hold on; plot(sig08.RPM, sig08.FOM, '-');plot(sig10.RPM, sig10.FOM, '-');plot(sig12.RPM, sig12.FOM);  title('FOM vs RPM'); xlabel('RPM'); ylabel('FOM');
+figure(103); hold on; plot(sig08.RPM, sig08.P, '-');plot(sig10.RPM, sig10.P, '-');plot(sig12.RPM, sig12.P);  title('P vs RPM'); xlabel('RPM'); ylabel('P');
