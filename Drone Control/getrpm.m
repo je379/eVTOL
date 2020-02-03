@@ -2,18 +2,22 @@
 clear all;
 close all;
 
-importrpm;
+% system("scp pi@raspberrypi:~/drone/STATIC_TEST.txt ./STATIC_TEST.txt");
+% system("scp pi@raspberrypi:~/drone/STATIC_THRUST.txt ./STATIC_THRUST.txt");
+
+
+[timepwr current voltage] = importpower();
+[timerpm RPM thr] = importrpm('TEST');
 [pks ind] = findpeaks(RPM);
 
-time2 = linspace(0,max(time),length(time));
+time2 = linspace(0,max(timerpm),length(timerpm));
 
 ind = ind(pks > 0.8);
 n = length(ind);
 timerpm = time2(ind);
 
-voltage = 11.82;
-current = 88/voltage;
-
+current = current/100;
+voltage = voltage/1000;
 systemresist = voltage/current;
 %% FIDDLE
 
@@ -33,7 +37,7 @@ separation(separation<0.002) = [];
 
 f = length(separation);
 
-averagewindow = 5;
+averagewindow = 2;
 
 for i = 1+averagewindow:f-averagewindow+1
     separation(i) = (sum(separation(i-averagewindow:i+averagewindow-1))/(2*averagewindow));
@@ -59,18 +63,25 @@ for l = 1+averagewindow:k-averagewindow+1
 end
 
 %% PLOT
-rpmmean = mean(rpmmeasure(2000:end))
+rpmmean = mean(rpmmeasure(rpmmeasure > 0.8*max(rpmmeasure)));
 
-P = voltage*current;
-T = mean(thr(150000:end))/1000;
+power = voltage.*current;
+P = mean(power(power > 0.8*max(power)));
+T = mean(thr(thr > 0.8*max(thr)))/1000;
 A = 0.0092;
 rho = 1.225;
 
-FOM = (T/P)*sqrt(T/(2*A*rho))
+FOM = (T/P)*sqrt(T/(2*A*rho));
 
-mass = 1000*T/9.81
+mass = 1000*T/9.81;
 
-figure(1); subplot(2,1,1); hold on; plot(timerpm, rpmmeasure); plot([0 max(timerpm)], [rpmmean rpmmean]); title('RPM'); xlabel('Time'); ylabel('RPM');
-subplot(2,1,2); hold on; plot([0 max(time2)], [1000*T/9.81 1000*T/9.81]); plot(time2, thr/9.81);title('Thrust (in grams)'); xlabel('Time'); ylabel('grams');
+output = [rpmmean mass]
+FOM
 
-save('OP_SIG08_3', 'FOM', 'rpmmean', 'P', 'T', 'mass');
+figure(1); subplot(2,2,1); hold on; plot(timerpm, rpmmeasure); plot([0 max(timerpm)], [rpmmean rpmmean]); title('RPM'); xlabel('Time'); ylabel('RPM');
+subplot(2,2,2); hold on; plot([0 max(time2)], [1000*T/9.81 1000*T/9.81]); plot(time2, thr/9.81);title('Thrust (in grams)'); xlabel('Time'); ylabel('grams');
+
+figure(1); subplot(2,2,3); hold on; plot(timepwr/1000, current); plot(timepwr/1000, voltage); title('Electrical Input'); xlabel('Time'); ylabel('Amps or Volts'); legend('Current', 'Voltage');
+subplot(2,2,4); hold on; plot(timepwr/1000, power); plot([0 max(timepwr)/1000], [P P]); title('Power'); xlabel('Time'); ylabel('Watts');
+
+save('OP_SIG10', 'FOM', 'rpmmean', 'P', 'T', 'mass');

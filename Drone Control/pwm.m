@@ -1,0 +1,3 @@
+PWM_DATA = [1750, 1650, 1550, 1850, 1950];
+RPM_DATA = [8300, 4734, 2930, 8260, 9522];
+figure; plot(PWM_DATA, RPM_DATA, 'o');

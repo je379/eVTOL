@@ -37,7 +37,7 @@ class RPM:
 
         return readpersec
 
-    def get_rpm(self, readings=10, lowcount=100):
+    def get_rpm(self, readings=10, lowcount=20):
         thresh = readings-1     # Number of readings to average
         r = 0                   # Count number of revolutions
         av = 0                  # Average number of revs (in 10)
@@ -79,7 +79,7 @@ class RPM:
         return av
 
 class loadcell:
-    def __init__(self, pins=[24,23], units='mN',calweight=309.5, calfactor=-0.00321221133216):
+    def __init__(self, pins=[24,23], units='mN',calweight=309.5, calfactor=-0.00324425560015):
         self.pins = pins
         self.units = units
         self.calweight = calweight
@@ -158,7 +158,7 @@ while True:
     try:
         rpmstate = rpm.get_state()
         
-        if num == 5000:
+        if num == 10000:
             now = time.time() - start
             currentthr = thr.thrust()
             num = 0

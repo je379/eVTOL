@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 import numpy as np
 import time
 import sys
+import os
 
 class RPM:
     def __init__(self, signalpin):
@@ -12,6 +13,9 @@ class RPM:
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.outpin, GPIO.IN)
+
+    def get_state(self):
+        return GPIO.input(self.outpin)
 
     def count_rate(self, timeout=5):
         print(" ")
@@ -33,10 +37,7 @@ class RPM:
 
         return readpersec
 
-    def get_state(self):
-        return GPIO.input(self.outpin)
-
-    def get_rpm(self, readings=10, lowcount=30):
+    def get_rpm(self, readings=10, lowcount=100):
         thresh = readings-1     # Number of readings to average
         r = 0                   # Count number of revolutions
         av = 0                  # Average number of revs (in 10)
@@ -74,32 +75,49 @@ class RPM:
 
                 # Reset zero counter
                 zero = 0
-        
+
         return av
 
 def cleanAndExit():
-    print("Cleaning loadcell...")
+    print(" ")
+    print(" ")
+    print("Cleaning GPIO...")
     GPIO.cleanup()
     print("DONE")
     sys.exit()
 
 # SETUP
 rpm     = RPM(18)
+
+filename = "STATIC_RPM.txt"
+os.system("rm STATIC_RPM.txt")
+
+rpmstate = rpm.get_state()
+
+sys.stdout.write('\nRPM = %i         \n' % rpmstate)
+
+num = 0
+start = time.time()
+now = time.time() - start
+
 while True:
     try:
-        currentrpm = rpm.get_state()
-
-        line = str(currentrpm) + " \n"
+        rpmstate = rpm.get_state()
+        
+        line = str(now) + "," + str(rpmstate) + " \n"
+        
         # Save RPMs to file
-        with open("rpm.txt", "a") as myfile:
+        with open(filename, "a") as myfile:
             myfile.write(line)
 
-        # sys.stdout.write('\rRPM = %i         ' % currentrpm)
-        # sys.stdout.flush()
-
-    except (KeyboardInterrupt, SystemExit):
-        readpersec = rpm.count_rate()
-        print("Readings per second = %i" % readpersec)
+    except KeyboardInterrupt:
+        
+        elapsed = time.time() - start
+        line = str(elapsed) + "," + str(rpmstate) + " \n"
+        
+        # Save RPMs to file
+        with open(filename, "a") as myfile:
+            myfile.write(line)
 
         cleanAndExit()
         break
