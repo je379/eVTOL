@@ -22,7 +22,7 @@ opts.ExtraColumnsRule = "ignore";
 opts.EmptyLineRule = "read";
 
 % Import the data
-tbl = readtable("/Users/jordaneriksen/Documents/Uni/Part 2B/Project/Drone Control/Logs/SIG10_compressed.txt", opts);
+tbl = readtable("/Users/jordaneriksen/Documents/Uni/Part 2B/Project/Drone Control/Logs/SIG08_compressed.txt", opts);
 
 %% Convert to output type
 TIMESTAMPms = tbl.TIMESTAMPms;
