@@ -2,7 +2,7 @@
 
 load('EXP_DATA_SHORTINTAKE.mat', 'S08', 'S10', 'S12');
 load('EXP_DATA_LONGINTAKE.mat','S10L','S08L','S12L');
-load('EXP_DATA_PROP.mat', 'PROP', 'BASE');
+load('EXP_DATA_PROP.mat', 'APC', 'BASE');
 
 pwm = 2000;
 nomV = 14.8;
@@ -76,5 +76,6 @@ end
 
 save('EXP_DATA_SHORTINTAKE.mat', 'S08', 'S10', 'S12');
 save('EXP_DATA_LONGINTAKE.mat','S10L','S08L','S12L');
-save('EXP_DATA_PROP.mat', 'PROP', 'BASE');
+save('EXP_DATA_PROP.mat', 'APC', 'BASE');
 
+EXP_DATA_PLOT
