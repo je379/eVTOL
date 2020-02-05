@@ -21,3 +21,5 @@ end
 APC.rpmmean = rpm;
 
 save('EXP_DATA_PROP.mat', 'APC', 'BASE');
+
+clear rpm diff diffj apcpwr testpwr testrpm rpmlim APC_FIT i j
