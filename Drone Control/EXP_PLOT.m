@@ -28,7 +28,7 @@ plot(S08L.rpmmean, S08L.T, '-xr');
 plot(S10L.rpmmean, S10L.T, '-xk');
 plot(S12L.rpmmean, S12L.T, '-xb');
 plot(APC.rpmmean, APC.T, 'xg');
-legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'Sigma = 1.2 (LONG)', 'APC Propellor', 'Location', 'southeast');
+legend('\sigma = 0.8', '\sigma = 1.0', '\sigma = 1.2', '\sigma = 1.2 (LONG)', 'APC Propellor', 'Location', 'southeast');
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Location', 'southeast');
 
 %% Power vs RPM
@@ -42,7 +42,7 @@ plot(S10L.rpmmean, S10L.P, '-xk');
 plot(S12L.rpmmean, S12L.P, '-xb');
 plot(S12.rpmmean, S12.P, 'xb');
 plot(APC.rpmmean, APC.P, 'xg');
-legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'Sigma = 1.2 (LONG)', 'APC Propellor', 'Location', 'southeast');
+legend('\sigma = 0.8', '\sigma = 1.0', '\sigma = 1.2', '\sigma = 1.2 (LONG)', 'APC Propellor', 'Location', 'southeast');
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Location', 'southeast');
 
 %% FOM vs Re
@@ -58,7 +58,7 @@ plot([min(S08L.Re) max(S12.Re)], [mean(S12.FOM) mean(S12.FOM)], 'b');
 plot([min(S08L.Re) max(S12.Re)], [mean(BASE.FOM) mean(BASE.FOM)], '-.g');
 plot([min(S08L.Re) max(S12.Re)], [mean(APC.FOM) mean(APC.FOM)], '-g');
 % plot(APC.Re, APC.FOM, 'xg');
-legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'Sigma = 1.2 (LONG)', 'Sigma = 1.2 (MEAN LONG)', 'Baseline Propellor', 'APC Propellor', 'Location', 'northeast');
+legend('\sigma = 0.8', '\sigma = 1.0', '\sigma = 1.2', '\sigma = 1.2 (LONG)', '\sigma = 1.2 (MEAN LONG)', 'Baseline Propellor', 'APC Propellor', 'Location', 'northeast');
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Baseline Propellor', 'APC Propellor', 'Location', 'east');
 
 %% Thrust vs Power
@@ -76,7 +76,7 @@ plot(S12.P, S12.T, 'xb');
 plot(BASE.P, BASE.T, '-.g');
 plot(APC.P, APC.T, '-g');
 % plot(APC.Re, APC.FOM, 'xg');
-legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'Sigma = 1.2 (LONG)', 'Baseline Propellor', 'APC Propellor', 'Location', 'southeast');
+legend('\sigma = 0.8', '\sigma = 1.0', '\sigma = 1.2', '\sigma = 1.2 (LONG)', 'Baseline Propellor', 'APC Propellor', 'Location', 'southeast');
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Baseline Propellor', 'APC Propellor', 'Location', 'east');
 
 save('EXP_DATA.mat','S08S','S10S','S12S','S08L','S10L','S12L','S08','S10','S12');
