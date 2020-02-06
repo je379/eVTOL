@@ -4,6 +4,8 @@
 [QGC] - QGroundControl;
 [RC] - Radio Controller;
 
+Machine running [Term] must be on the same network as [RPi]. Connection made between Pixhawk and [QGC] via telemetry (connect via USB).
+
 ## COLLECTION OF DATA
  - [QGC] Run Widget > Analyse:
        select  `SYS_STATUS.battery_current`
