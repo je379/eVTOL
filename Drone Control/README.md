@@ -28,10 +28,10 @@
  - [RPi] `Ctrl-C` on STATIC_TEST.py
  
  ## GET DATA TO PC
- - [Term] Transfer output using scp
- ```
- scp pi@raspberrypi.local:~/drone/STATIC_TEST.txt ./STATIC_TEST.txt
- ```
+- [Term] Transfer output using scp.
+     ```
+     scp pi@raspberrypi.local;~/drone/STATIC_TEST.txt ./STATIC_TEST.txt
+     ```
  ## PROCESS DATA
  - [Matlab] Run EXP_COLLECT.m (Will run EXP_UPDATE.m and EXP_PLOT.m as
  well)
