@@ -2,9 +2,15 @@
 clear all;
 close all;
 
+%% TEST DEFINITION
+% 08, 10, 12
+% 08S, 10S, 12S
+% 08L, 10L, 12L
+SIGMANAME = '10'; 
+pwm = 2000;
+
 % system("scp pi@raspberrypi:~/drone/STATIC_TEST.txt ./STATIC_TEST.txt");
 % system("scp pi@raspberrypi:~/drone/STATIC_THRUST.txt ./STATIC_THRUST.txt");
-
 
 [timepwr current voltage] = importpower();
 [timerpm RPM thr] = importrpm('TEST');
@@ -85,5 +91,13 @@ subplot(2,2,2); hold on; plot(time2, thr/9.81);plot([0 max(time2)], [1000*T/9.81
 figure(1); subplot(2,2,3); hold on; plot(timepwr/1000, current); plot(timepwr/1000, voltage); ylim([0 1.2*max(voltage)]); title('Electrical Input'); xlabel('Time'); ylabel('Amps or Volts'); legend('Current', 'Voltage');
 subplot(2,2,4); hold on; plot(timepwr/1000, power); plot([0 max(timepwr)/1000], [P P], 'k'); ylim([0 1.2*P]); title('Power'); xlabel('Time'); ylabel('Watts');
 
-save('OP_SIG10_L_16', 'FOM', 'rpmmean', 'P', 'T', 'mass');
-% save('OP_PROP_BASE', 'FOM', 'P', 'T', 'mass');
+if mean(voltage) > 12.5
+    nomV = 14.8;
+else
+    nomV = 12;
+end
+
+save('EXP_META', 'pwm','SIGMANAME','nomV');
+save('EXP_OP', 'FOM', 'P', 'T', 'mass', 'rpmmean');
+
+clear all;

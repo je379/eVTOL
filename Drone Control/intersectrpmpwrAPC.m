@@ -4,11 +4,11 @@ load('APC_FIT.mat', 'APC_FIT');
 rpmlim = [3000 12000];
 
 testrpm = linspace(rpmlim(1), rpmlim(2), 10000);
-testpwr = APC_FIT.rpm_pwr(testrpm);
+testthr = APC_FIT.rpm_thr(testrpm);
 
 for i = 1:length(APC.P)
-    apcpwr = ones([1, 10000]) .* APC.P(i);
-    diff = apcpwr - testpwr;
+    apcthr = ones([1, 10000]) .* APC.T(i);
+    diff = apcthr - testthr;
     for j = 1:10000
         diffj = diff(j);
         if diffj < 0
@@ -22,4 +22,4 @@ APC.rpmmean = rpm;
 
 save('EXP_DATA_PROP.mat', 'APC', 'BASE');
 
-clear rpm diff diffj apcpwr testpwr testrpm rpmlim APC_FIT i j
+clear rpm diff diffj apcthr testthr testrpm rpmlim APC_FIT i j
