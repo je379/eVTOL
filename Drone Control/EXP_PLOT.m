@@ -4,7 +4,6 @@
 % FOM vs Re
 % Pressure vs Axial Position
 % Pressure Rise vs Flow Coefficient
-close all;
 
 %% Import
 intersectrpmpwrAPC;
@@ -20,7 +19,7 @@ S12 = calcs(S12);S12S = calcs(S12S);S12L = calcs(S12L);
 APC = calcs(APC);BASE = calcs(BASE);
 
 %% Thrust vs RPM
-figure(1); subplot(2,3,1); hold on; title('Thrust vs RPM'); xlabel('RPM'); 
+figure(2); subplot(2,3,1); hold on; title('Thrust vs RPM'); xlabel('RPM'); 
 ylabel('Thrust / N'); ylim([0 max([max(S08L.T), max(S10L.T), max(S12L.T), max(APC.T)])]);
 % plot(S08.rpmmean, S08.T, '-or');
 % plot(S10.rpmmean, S10.T, '-ok');
@@ -33,7 +32,7 @@ legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'APC Propellor', 'Location',
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Location', 'southeast');
 
 %% Power vs RPM
-figure(1); subplot(2,3,4); hold on; title('Power vs RPM'); xlabel('RPM'); 
+figure(2); subplot(2,3,4); hold on; title('Power vs RPM'); xlabel('RPM'); 
 ylabel('Power / W'); ylim([0 max([max(S08L.P), max(S10L.P), max(S12L.P), max(APC.P)])]);
 % plot(S08.rpmmean, S08.P, '-or');
 % plot(S10.rpmmean, S10.P, '-ok');
@@ -46,7 +45,7 @@ legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'APC Propellor', 'Location',
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Location', 'southeast');
 
 %% FOM vs Re
-figure(1); subplot(2,3,[2 5]); hold on; title('FoM vs Re'); xlabel('Re'); 
+figure(2); subplot(2,3,[2 5]); hold on; title('FoM vs Re'); xlabel('Re'); 
 ylabel('FoM / M_f'); ylim([0 1.2]);
 plot(S08.rpmmean, S08.FOM, '-or');
 plot(S10.rpmmean, S10.FOM, '-ok');
@@ -61,7 +60,7 @@ legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'Baseline Propellor', 'APC P
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Baseline Propellor', 'APC Propellor', 'Location', 'east');
 
 %% Thrust vs Power
-figure(1); subplot(2,3,[3 6]); hold on; title('Thrust vs Power'); xlabel('Power / W'); 
+figure(2); subplot(2,3,[3 6]); hold on; title('Thrust vs Power'); xlabel('Power / W'); 
 ylabel('Thrust / N'); 
 ylim([0 max([max(S08L.T), max(S10L.T), max(S12L.T), max(APC.T), max(BASE.T)])]);
 xlim([0 max([max(S08L.P), max(S10L.P), max(S12L.P), max(APC.P), max(BASE.P)])]);
