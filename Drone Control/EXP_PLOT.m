@@ -76,6 +76,5 @@ plot(APC.P, APC.T, '-g');
 legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'Baseline Propellor', 'APC Propellor', 'Location', 'northeast');
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Baseline Propellor', 'APC Propellor', 'Location', 'east');
 
-save('EXP_DATA_LONGINTAKE.mat', 'S08L','S10L','S12L');
-save('EXP_DATA_SHORTINTAKE.mat', 'S08','S10','S12');
+save('EXP_DATA.mat','S08S','S10S','S12S','S08L','S10L','S12L','S08','S10','S12');
 save('EXP_DATA_PROP.mat', 'BASE','APC');
