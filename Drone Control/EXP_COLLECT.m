@@ -34,7 +34,7 @@ close all;
 % 08, 10, 12
 % 08S, 10S, 12S
 % 08L, 10L, 12L
-SIGMANAME = '10'; 
+SIGMANAME = '12'; 
 pwm = 2000;
 
 %% PROCESS DATA
@@ -127,4 +127,4 @@ save('EXP_OP', 'FOM', 'P', 'T', 'mass', 'rpmmean');
 
 clear all;
 
-EXP_UPDATE;
+% EXP_UPDATE;

@@ -5,6 +5,8 @@ load('EXP_DATA_PROP.mat', 'APC', 'BASE');
 
 load('EXP_META.mat')
 data = load('EXP_OP.mat');
+data.nomV = nomV;
+data.pwm = pwm;
 
 switch SIGMANAME
     case '8'
@@ -26,7 +28,7 @@ switch SIGMANAME
     case '12L'
         S12L = EXP_ADD(S12L, data);
     case 'APC'
-        PROP.FOM = [PROP.FOM data.];
+        PROP.FOM = [PROP.FOM data.FOM];
         PROP.P = [PROP.P data.P];
         PROP.T = [PROP.T data.T];
         PROP.mass = [PROP.mass data.mass];
@@ -46,4 +48,4 @@ save('EXP_DATA_PROP.mat', 'APC', 'BASE');
 
 clear all;
 
-EXP_DATA_PLOT;
+% EXP_PLOT;
