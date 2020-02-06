@@ -58,7 +58,7 @@ plot([min(S08L.Re) max(S12.Re)], [mean(S12.FOM) mean(S12.FOM)], 'b');
 plot([min(S08L.Re) max(S12.Re)], [mean(BASE.FOM) mean(BASE.FOM)], '-.g');
 plot([min(S08L.Re) max(S12.Re)], [mean(APC.FOM) mean(APC.FOM)], '-g');
 % plot(APC.Re, APC.FOM, 'xg');
-legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'Sigma = 1.2 (LONG)', 'Sigma = 1.2 (MEAN LONG)', 'Baseline Propellor', 'APC Propellor', 'Location', 'northeast');
+legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'Sigma = 1.2 (LONG)', 'Sigma = 1.2 (ME'Baseline Propellor', 'APC Propellor', 'Location', 'northeast');
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Baseline Propellor', 'APC Propellor', 'Location', 'east');
 
 %% Thrust vs Power
