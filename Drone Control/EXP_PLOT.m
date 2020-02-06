@@ -47,9 +47,9 @@ legend('Sigma = 0.8', 'Sigma = 1.0', 'Sigma = 1.2', 'APC Propellor', 'Location',
 %% FOM vs Re
 figure(2); subplot(2,3,[2 5]); hold on; title('FoM vs Re'); xlabel('Re'); 
 ylabel('FoM / M_f'); ylim([0 1.2]);
-plot(S08.rpmmean, S08.FOM, '-or');
-plot(S10.rpmmean, S10.FOM, '-ok');
-plot(S12.rpmmean, S12.FOM, '-ob');
+% plot(S08.rpmmean, S08.FOM, '-or');
+% plot(S10.rpmmean, S10.FOM, '-ok');
+% plot(S12.rpmmean, S12.FOM, '-ob');
 plot(S08L.Re, S08L.FOM, '-xr');
 plot(S10L.Re, S10L.FOM, '-xk');
 plot(S12L.Re, S12L.FOM, '-xb');
