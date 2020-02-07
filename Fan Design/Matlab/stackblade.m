@@ -1,7 +1,7 @@
 function [R,T,Z] = stackblade(bezier_chi1,bezier_chi2,bezier_c,N_bezier,bladetype,file_name)
 % Find B-spline interpolated blade by stacking many 2-D sections
 % and convert the curved blade coordinates into Cartesians
-global flagplot ac bc cc shiftvary sectionlocation
+global flagplot ac bc cc acr bcr ccr shiftvary sectionlocation
 
 r     = [];
 chi1d = [];
@@ -40,6 +40,12 @@ for i=1:N
 %     yblade = yblade+0.01;
 %     xblade
     
+%     yshift = ac*(R(i,:).^2)+bc*R(i,:)+cc;
+%     yblade = yblade+yshift;
+%     shiftvary(i) = mean(yshift);
+%     if i == 21
+%         save('shiftvary');
+%     end
     if strcmpi(bladetype, 'stator')
         yshift = ac*(R(i,:).^2)+bc*R(i,:)+cc;
         yblade = yblade+yshift;
@@ -48,6 +54,12 @@ for i=1:N
             save('shiftvary');
         end
     end
+    
+    if strcmpi(bladetype, 'rotor')
+        yshift = acr*(R(i,:).^2)+bcr*R(i,:)+ccr;
+        yblade = yblade+yshift;
+    end
+
     
     T(i,:)=yblade/r(i);
     Z(i,:)=xblade;
