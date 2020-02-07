@@ -40,7 +40,7 @@ for n1=1:length(file_name)
     Z_stat         = min(min(squeeze(s_s_steps(:,3,:))));
     rotor_offset   = 0.0125 - Z_rot;
     stator_offset  = 0.037318- Z_stat;
-    disp(stator_offset);
+%     disp(stator_offset);
     r_s_steps(:,3,:)  = rotor_offset + r_s_steps(:,3,:);
     r_p_steps(:,3,:)  = rotor_offset + r_p_steps(:,3,:);
     s_s_steps(:,3,:)  = stator_offset + s_s_steps(:,3,:);
@@ -62,7 +62,15 @@ for i = 1:size(r_XYZ1,3)
 end
 
 % Get centerline values
+% MAKE ZOFFSET A FUNCTION OF R
 zoffset = stator_offset*ones([1,21]);
+
+% Sweep offset
+sweepangle = 10;
+dz = (r_c/2)*tan(2*pi*sweepangle/360); p = polyfit([0 0.5 1],[0 dz 0],2);
+dz_sec = polyval(p,linspace(0,1,21));
+zroffset = rotor_offset*ones([1,21]) + dz_sec;
+
 load('sectionlocation.mat');
 figure(3); plot3(sectionlocation,shiftvary,zoffset);
 centerline = [sectionlocation.',shiftvary.',zoffset.'].*1000;

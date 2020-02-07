@@ -4,7 +4,7 @@ clc
 
 %% Global Variables
 % Declare global variables
-global flagplot ac bc cc shiftvary sectionlocation
+global flagplot ac bc cc acr bcr ccr shiftvary sectionlocation
 
 % Set global flags
 flag            = 2;                        % 1 - variable NR, 2 - fixed NR
@@ -53,6 +53,13 @@ theta2 = 10*pi/180;
 ac = (tan(theta1)+tan(theta2))/(2*r_h-2*r_c);
 bc = tan(theta1)-2*ac*r_h;
 cc = -ac*r_h^2-bc*r_h;
+
+% Rotor Shape
+rtheta1 = 25*pi/180;
+rtheta2 = 10*pi/180;
+acr = (tan(rtheta1)+tan(rtheta2))/(2*r_h-2*r_c);
+bcr = tan(rtheta1)-2*ac*r_h;
+ccr = -ac*r_h^2-bc*r_h;
 
 % File Name
 temp            = {'BladeGeom'};
