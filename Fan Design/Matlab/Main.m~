@@ -55,8 +55,8 @@ bc = tan(theta1)-2*ac*r_h;
 cc = -ac*r_h^2-bc*r_h;
 
 % Rotor Shape
-rtheta1 = -25*pi/180;
-rtheta2 = -20*pi/180;
+rtheta1 = 25*pi/180;
+rtheta2 = 10*pi/180;
 acr = (tan(rtheta1)+tan(rtheta2))/(2*r_h-2*r_c);
 bcr = tan(rtheta1)-2*acr*r_h;
 ccr = -acr*r_h^2-bcr*r_h;
