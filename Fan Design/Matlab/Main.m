@@ -89,7 +89,7 @@ psi_mid         = psi;                      % Assumed stage loading coefficient
 phi_mid         = phi;                      % Assumed flow coefficient
 DF_r            = linspace(0.45,0.45,N)';   % Assumed stator diffusion factor
 DF_s            = linspace(0.45,0.45,N)';   % Assumed rotor diffusion factor
-p               = 1.0;                      % psi distribution exponent (0 - forced, 2 - free)
+p               = 1;                      % psi distribution exponent (0 - forced, 2 - free)
 % External flow conditions
 Vinf            = 0;                        % Forward velocity of propulsor
 

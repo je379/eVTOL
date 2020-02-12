@@ -34,13 +34,17 @@ close all;
 % 08, 10, 12
 % 08S, 10S, 12S
 % 08L, 10L, 12L
-SIGMANAME = '12'; 
+SIGMANAME = '12S'; 
 pwm = 2000;
 
+LCfit = load('LC_FIT.mat','LC_cal');
+thrustfit = LCfit.LC_cal;
 %% PROCESS DATA
 [timepwr current voltage] = importpower();
 [timerpm RPM thr] = importrpm('TEST');
 [pks ind] = findpeaks(RPM);
+
+thr = 9.81*thrustfit(thr)/1000;
 
 time2 = linspace(0,max(timerpm),length(timerpm));
 
@@ -98,7 +102,7 @@ rpmmean = mean(rpmmeasure(rpmmeasure > 0.8*max(rpmmeasure)));
 
 power = voltage.*current;
 P = mean(power(power > 0.8*max(power)));
-T = mean(thr(thr > 0.8*max(thr)))/1000;
+T = mean(thr(thr > 0.8*max(thr)));
 A = 0.0092;
 rho = 1.225;
 
@@ -111,7 +115,7 @@ FOM
 
 figure(1); 
 subplot(2,2,1); hold on; plot(timerpm, rpmmeasure); plot([0 max(timerpm)], [rpmmean rpmmean], 'k'); title('RPM'); xlabel('Time'); ylabel('RPM');
-subplot(2,2,3); hold on; plot(time2, thr/9.81);plot([0 max(time2)], [1000*T/9.81 1000*T/9.81], 'k'); ylim([0 1.2*1000*T/9.81]);title('Thrust (in grams)'); xlabel('Time'); ylabel('grams');
+subplot(2,2,3); hold on; plot(time2, 1000*thr/9.81);plot([0 max(time2)], [1000*T/9.81 1000*T/9.81], 'k'); ylim([0 1.2*1000*T/9.81]);title('Thrust (in grams)'); xlabel('Time'); ylabel('grams');
 subplot(2,2,2); hold on; plot(timepwr/1000, current); plot(timepwr/1000, voltage); ylim([0 1.2*max(voltage)]); title('Electrical Input'); xlabel('Time'); ylabel('Amps or Volts'); legend('Current', 'Voltage');
 subplot(2,2,4); hold on; plot(timepwr/1000, power); plot([0 max(timepwr)/1000], [P P], 'k'); ylim([0 1.2*P]); title('Power'); xlabel('Time'); ylabel('Watts');
 

@@ -23,7 +23,7 @@ figure(2); subplot(2,3,1); hold on; title('Thrust vs RPM'); xlabel('RPM');
 ylabel('Thrust / N'); ylim([0 max([max(S08L.T), max(S10L.T), max(S12L.T), max(APC.T), max(S12.T)])]);
 % plot(S08.rpmmean, S08.T, '-or');
 % plot(S10.rpmmean, S10.T, '-ok');
-plot(S12.rpmmean, S12.T, 'xb');
+plot(S12S.rpmmean, S12S.T, 'xb');
 plot(S08L.rpmmean, S08L.T, '-xr');
 plot(S10L.rpmmean, S10L.T, '-xk');
 plot(S12L.rpmmean, S12L.T, '-xb');
@@ -40,7 +40,7 @@ ylabel('Power / W'); ylim([0 max([max(S08L.P), max(S10L.P), max(S12L.P), max(APC
 plot(S08L.rpmmean, S08L.P, '-xr');
 plot(S10L.rpmmean, S10L.P, '-xk');
 plot(S12L.rpmmean, S12L.P, '-xb');
-plot(S12.rpmmean, S12.P, 'xb');
+plot(S12S.rpmmean, S12S.P, 'xb');
 plot(APC.rpmmean, APC.P, 'xg');
 legend('\sigma = 0.8', '\sigma = 1.0', '\sigma = 1.2', '\sigma = 1.2 (LONG)', 'APC Propellor', 'Location', 'southeast');
 % legend('SHORT Sigma = 0.8', 'SHORT Sigma = 1.0', 'SHORT Sigma = 1.2', 'LONG Sigma = 0.8', 'LONG Sigma = 1.0', 'LONG Sigma = 1.2', 'Location', 'southeast');
@@ -53,8 +53,8 @@ ylabel('FoM / M_f'); ylim([0 1]);
 plot(S08L.Re, S08L.FOM, '-xr');
 plot(S10L.Re, S10L.FOM, '-xk');
 plot(S12L.Re, S12L.FOM, '-xb');
-plot(S12.Re, S12.FOM, 'xb');
-plot([min(S08L.Re) max(S12.Re)], [mean(S12.FOM) mean(S12.FOM)], 'b');
+plot(S12S.Re, S12S.FOM, 'xb');
+plot([min(S08L.Re) max(S12.Re)], [mean(S12S.FOM) mean(S12S.FOM)], 'b');
 plot([min(S08L.Re) max(S12.Re)], [mean(BASE.FOM) mean(BASE.FOM)], '-.g');
 plot([min(S08L.Re) max(S12.Re)], [mean(APC.FOM) mean(APC.FOM)], '-g');
 % plot(APC.Re, APC.FOM, 'xg');
@@ -64,15 +64,15 @@ legend('\sigma = 0.8', '\sigma = 1.0', '\sigma = 1.2', '\sigma = 1.2 (LONG)', '\
 %% Thrust vs Power
 figure(2); subplot(2,3,[3 6]); hold on; title('Thrust vs Power'); xlabel('Power / W'); 
 ylabel('Thrust / N'); 
-ylim([0 max([max(S08L.T), max(S10L.T), max(S12L.T), max(APC.T), max(BASE.T), max(S12.T)])]);
-xlim([0 max([max(S08L.P), max(S10L.P), max(S12L.P), max(APC.P), max(BASE.P), max(S12.P)])]);
+ylim([0 max([max(S08L.T), max(S10L.T), max(S12L.T), max(APC.T), max(BASE.T), max(S12S.T)])]);
+xlim([0 max([max(S08L.P), max(S10L.P), max(S12L.P), max(APC.P), max(BASE.P), max(S12S.P)])]);
 % plot(S08.rpmmean, S08.FOM, '-or');
 % plot(S10.rpmmean, S10.FOM, '-ok');
 
 plot(S08L.P, S08L.T, '-xr');
 plot(S10L.P, S10L.T, '-xk');
 plot(S12L.P, S12L.T, '-xb');
-plot(S12.P, S12.T, 'xb');
+plot(S12S.P, S12S.T, 'xb');
 plot(BASE.P, BASE.T, '-.g');
 plot(APC.P, APC.T, '-g');
 % plot(APC.Re, APC.FOM, 'xg');

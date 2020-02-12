@@ -1,74 +1,72 @@
+from __future__ import print_function
+from ADCPi import ADCPi
+from hx711 import HX711
+import RPi.GPIO as GPIO
+import numpy as np
 import time
 import sys
+import os
 
-EMULATE_HX711=False
+class loadcell:
+    def __init__(self, pins=[24,23], units='mN'):
+        self.pins = pins
+        self.units = units
+        # self.calweight = calweight
+        # self.calfactor = calfactor
 
-referenceUnit = 1
+        self.lc = HX711(self.pins[0], self.pins[1])
 
-if not EMULATE_HX711:
-    import RPi.GPIO as GPIO
-    from hx711 import HX711
-else:
-    from emulated_hx711 import HX711
+        self.lc.set_reading_format("MSB", "MSB")
+
+        print("Set Zero Weight")
+        self.lc.reset()
+        self.lc.tare()
+        print("Tare done. Add weight now...")
+
+    def test(self, times=10):
+        val = self.lc.get_weight(times)
+        # force = val*self.Ax
+
+        self.lc.power_down()
+        self.lc.power_up()
+
+        return val
 
 def cleanAndExit():
-    print("Cleaning...")
-
-    if not EMULATE_HX711:
-        GPIO.cleanup()
-        
-    print("Bye!")
+    print(" ")
+    print(" ")
+    print("Cleaning GPIO...")
+    GPIO.cleanup()
+    print("DONE")
     sys.exit()
 
-hx = HX711(24, 23)
-hx.set_reading_format("MSB", "MSB")
+# SETUP
+thr     = loadcell()
 
-print("Set Zero Weight")
+filename = "LC_cal.txt"
+os.system("rm LC_cal.txt")
 
-hx.reset()
-hx.tare()
+currentthr = thr.test()
 
-print("Tare done. Add weight now...")
+sys.stdout.write('\nForce = %.4e %s\n' % (currentthr, thr.units))
 
-try:
-    calin = input("Weight added (grams/ [ ENTER for default ] ): ")
-    gravity = 9.81
-
-    print "____"
-    print "Input Weight = %f grams" % calin
-    # to use both channels, you'll need to tare them both
-    #hx.tare_A()
-    #hx.tare_B()
-
-    calout = hx.get_weight(5)
-    print "Raw Value = %f" % calout
-    # y = Ax + B - Assume B set by tare. Therefore A...
-
-    Ax = calin*gravity/calout
-
-except SyntaxError:
-    calin = 309.5
-    print("Calibration weight set to default (309.5g)")
-    Ax = -0.00390069915156
-
-print "Calibration factor = %s " % Ax
 while True:
     try:
-        val = hx.get_weight(20)
-        force = val*Ax
+            currentthr = thr.test()
+        
+        line = str(currentthr) + " \n"
+        
+        # Save RPMs to file
+        with open(filename, "a") as myfile:
+            myfile.write(line)
 
-        sys.stdout.write('\rForce = %.3f mN' % force)
-        sys.stdout.flush()
+    except KeyboardInterrupt:
+        
+        line = str(currentthr) + " \n"
+        
+        # Save RPMs to file
+        with open(filename, "a") as myfile:
+            myfile.write(line)
 
-        # To get weight from both channels (if you have load cells hooked up 
-        # to both channel A and B), do something like this
-        #val_A = hx.get_weight_A(5)
-        #val_B = hx.get_weight_B(5)
-        #print "A: %s  B: %s" % ( val_A, val_B )
-
-        hx.power_down()
-        hx.power_up()
-
-    except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
-
+        break

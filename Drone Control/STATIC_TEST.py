@@ -94,37 +94,37 @@ class loadcell:
         self.lc.tare()
         print("Tare done. Add weight now...")
 
-        try:
-            self.calin = input("Weight added (grams/ [ ENTER for default ] ): ")
-            gravity = 9.81
+        # try:
+        #     self.calin = input("Weight added (grams/ [ ENTER for default ] ): ")
+        #     gravity = 9.81
 
-            print("____")
-            print("Input Weight = %f grams" % self.calin)
-            # to use both channels, you'll need to tare them both
-            #hx.tare_A()
-            #hx.tare_B()
+        #     print("____")
+        #     print("Input Weight = %f grams" % self.calin)
+        #     # to use both channels, you'll need to tare them both
+        #     #hx.tare_A()
+        #     #hx.tare_B()
 
-            self.calout = self.lc.get_weight(5)
-            print("Raw Value = %f" % self.calout)
-            # y = Ax + B - Assume B set by tare. Therefore A...
+        #     self.calout = self.lc.get_weight(5)
+        #     print("Raw Value = %f" % self.calout)
+        #     # y = Ax + B - Assume B set by tare. Therefore A...
 
-            self.Ax = self.calin*gravity/self.calout
+        #     self.Ax = self.calin*gravity/self.calout
 
-        except SyntaxError: # User hits ENTER, enabling use of previous calibration values
-            self.calin = self.calweight
-            print("Calibration weight set to default (309.5g)")
-            self.Ax = self.calfactor
+        # except SyntaxError: # User hits ENTER, enabling use of previous calibration values
+        #     self.calin = self.calweight
+        #     print("Calibration weight set to default (309.5g)")
+        #     self.Ax = self.calfactor
 
-        print("Calibration factor = %s " % self.Ax)
+        # print("Calibration factor = %s " % self.Ax)
 
     def thrust(self, times=1):
         val = self.lc.get_weight(times)
-        force = val*self.Ax
+        # force = val*self.Ax
 
         self.lc.power_down()
         self.lc.power_up()
 
-        return force
+        return val
 
 def cleanAndExit():
     print(" ")
@@ -149,6 +149,11 @@ rpmstate = rpm.get_state()
 
 
 sys.stdout.write('\nForce = %.4e %s    RPM = %i         \n' % (currentthr, thr.units, rpmstate))
+
+try:
+    go = input("[ENTER] to begin...")
+except SyntaxError: # User hits ENTER
+    pass
 
 num = 0
 start = time.time()
