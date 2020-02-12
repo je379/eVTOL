@@ -114,7 +114,7 @@ V2              = V2_abs(N_mid);
 P2              = P02-0.5*rho*V2^2;
 
 %% Reaction
-R               = 1-0.5*(phi(ceil(n/2))^2/psi(ceil(n/2)))*(tan(alpha2(N_mid))^2);
+R               = 1-0.5*(phi(ceil(n/2))^2/psi(ceil(n/2)))*(tan(alpha2(N_mid))^2)
 
 %% Blade Count
 [r.blades,s.blades,sc_r,sc_s,c_r,c_s]  = BladeNumber(AR_rotor,AR_stator,DF_r,DF_s,r_h,r_c,angles,N);

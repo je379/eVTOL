@@ -56,11 +56,8 @@ cc = -ac*r_h^2-bc*r_h;
 
 % Rotor Shape
 rtheta1 = -25*pi/180;
-<<<<<<< HEAD
 rtheta2 = -60*pi/180;
-=======
 rtheta2 = -20*pi/180;
->>>>>>> 98ac3c369e93bf3f1f391ee7f2b03302df83b5da
 acr = (tan(rtheta1)+tan(rtheta2))/(2*r_h-2*r_c);
 bcr = tan(rtheta1)-2*acr*r_h;
 ccr = -acr*r_h^2-bcr*r_h;
@@ -93,7 +90,7 @@ psi_mid         = psi;                      % Assumed stage loading coefficient
 phi_mid         = phi;                      % Assumed flow coefficient
 DF_r            = linspace(0.45,0.45,N)';   % Assumed stator diffusion factor
 DF_s            = linspace(0.45,0.45,N)';   % Assumed rotor diffusion factor
-p               = 1;                      % psi distribution exponent (0 - forced, 2 - free)
+p               = 1.75;                      % psi distribution exponent (0 - forced, 2 - free)
 % External flow conditions
 Vinf            = 0;                        % Forward velocity of propulsor
 
