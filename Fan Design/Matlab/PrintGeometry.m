@@ -40,6 +40,7 @@ for n1=1:length(file_name)
     rotor_offset   = 0.0125 - Z_rot;
     stator_offset  = 0.037318- Z_stat;
     
+<<<<<<< HEAD
 %% Sweep and Lean Offsets
 % Set distribution and apply in y and z directions
 
@@ -73,12 +74,19 @@ for n1=1:length(file_name)
     % Plot sweep and lean curves
     figure(11); plot(linspace(r_h,r_c,21),dtips_offset); axis equal; title('Tip Offset');
     figure(10); plot(linspace(r_h,r_c,21),dle_offset); axis equal; title('Leading Edge Offset');
+=======
+    sweepangle = 5;
+    dz = (r_c/2)*tan(2*pi*sweepangle/360); p = polyfit([0 0.5 1],[0 dz 0],2);
+    dz_sec = polyval(p,linspace(0,1,21));
+    zroffset = rotor_offset*ones([1,21]) + dz_sec;
+>>>>>>> 98ac3c369e93bf3f1f391ee7f2b03302df83b5da
     
     for stepi = 1:21
 %     disp(stator_offset);
         r_s_steps(:,3,stepi)  = zroffset(stepi) + r_s_steps(:,3,stepi);
         r_p_steps(:,3,stepi)  = zroffset(stepi) + r_p_steps(:,3,stepi);
         
+<<<<<<< HEAD
         r_s_steps(:,2,stepi)  = r_s_steps(:,2,stepi) + yroffset(stepi);
         r_p_steps(:,2,stepi)  = r_p_steps(:,2,stepi) + yroffset(stepi);
         
@@ -87,6 +95,10 @@ for n1=1:length(file_name)
         
         r_XYZ1(:,2,stepi)    = r_XYZ1(:,2,stepi) + yroffset(stepi);
         r_XYZ2(:,2,stepi)    = r_XYZ2(:,2,stepi) + yroffset(stepi);
+=======
+        r_XYZ1(:,3,stepi)    = zroffset(stepi) + r_XYZ1(:,3,stepi);
+        r_XYZ2(:,3,stepi)    = zroffset(stepi) + r_XYZ2(:,3,stepi);
+>>>>>>> 98ac3c369e93bf3f1f391ee7f2b03302df83b5da
     end
     
     s_s_steps(:,3,:)  = stator_offset + s_s_steps(:,3,:);

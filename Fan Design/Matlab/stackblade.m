@@ -60,6 +60,7 @@ for i=1:N
         end
     end
     
+<<<<<<< HEAD
 %     if strcmpi(bladetype, 'rotor')
 %         yshift = dy_lean(i);
 %         yblade = yblade+yshift;
@@ -67,6 +68,12 @@ for i=1:N
 % %         yshift = acr*(R(i,:).^2)+bcr*R(i,:)+ccr;
 % %         yblade = yblade+yshift;
 %     end
+=======
+    if strcmpi(bladetype, 'rotor')
+        yshift = acr*(R(i,:).^2)+bcr*R(i,:)+ccr;
+        yblade = yblade+yshift;
+    end
+>>>>>>> 98ac3c369e93bf3f1f391ee7f2b03302df83b5da
 
     
     T(i,:)=yblade/r(i);
