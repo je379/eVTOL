@@ -29,6 +29,11 @@ N = length(c);
 % Loop over radial direction and create a new blade section at every go
 count = 0;
 
+% dz = (r(end)/8)*tan(2*pi*40/360);
+% p = polyfit([0 0.1 0.2 0.3 0.5 0.7 0.8 0.9 1],[-0.2*dz 0.2*dz 0.5*dz 0.6*dz 0.65*dz 0.6*dz 0.5*dz 0.2*dz -0.3*dz],5);
+% dy_lean = linspace(0,0.75*dz,21)-polyval(p,linspace(0,1,21));
+% figure(10); plot(r,dy_lean); axis equal;
+
 for i=1:N
     [xblade,yblade]=bladecentroid(chi1d(i),chi2d(i),c(i),bladetype);
     R(i,:)=r(i)*ones(1,length(xblade));
@@ -55,10 +60,13 @@ for i=1:N
         end
     end
     
-    if strcmpi(bladetype, 'rotor')
-        yshift = acr*(R(i,:).^2)+bcr*R(i,:)+ccr;
-        yblade = yblade+yshift;
-    end
+%     if strcmpi(bladetype, 'rotor')
+%         yshift = dy_lean(i);
+%         yblade = yblade+yshift;
+%         
+% %         yshift = acr*(R(i,:).^2)+bcr*R(i,:)+ccr;
+% %         yblade = yblade+yshift;
+%     end
 
     
     T(i,:)=yblade/r(i);

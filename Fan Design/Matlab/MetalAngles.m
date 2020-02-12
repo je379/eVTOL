@@ -20,8 +20,10 @@ alpha2          = atand(V2_theta/Vx);
 
 %% Rotor inlet/outlet angles
 r.chi1          = abs(beta1)-r.I1;
-m               = 0.23*(2*ac_r)^2+abs(beta2)/500;        % m for Carter's rule
-r.chi2          = (abs(beta2)-m.*r.chi1.*sc_r.^0.5)./(1-m.*sc_r.^0.5);
+
+m               = 0.23*(2*ac_r).^2 + abs(alpha2)/500;        % m for Carter's rule
+
+r.chi2          = (abs(beta2) - m .* r.chi1 .* sc_r .^ 0.5) ./ (1-m.*sc_r.^0.5);
 
 %% Stator inlet/outlet angles
 s.chord         = c_s;

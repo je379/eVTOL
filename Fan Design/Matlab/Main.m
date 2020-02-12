@@ -32,7 +32,7 @@ r.radius        = linspace(r_h,r_c,N)';     % Radial test points (m)
 HTR             = r_h/r_c;                  % Hub to tip ratio
 AR_rotor        = 1.5;                      % Aspect ratio of rotor
 AR_stator       = 1.5;                      % Aspect ratio of stator
-tip_gap_percent = 0.5;                        
+tip_gap_percent = 0.0;                        
 r.I1            = linspace(-5,-5,N)';       % Rotor incidence angle
 s.I2            = linspace(-5,-5,N)';       % Stator incidence angle
 ac_r            = 0.5;%???????????????????? % Max Camber position to chord ratio
@@ -56,7 +56,7 @@ cc = -ac*r_h^2-bc*r_h;
 
 % Rotor Shape
 rtheta1 = -25*pi/180;
-rtheta2 = -20*pi/180;
+rtheta2 = -60*pi/180;
 acr = (tan(rtheta1)+tan(rtheta2))/(2*r_h-2*r_c);
 bcr = tan(rtheta1)-2*acr*r_h;
 ccr = -acr*r_h^2-bcr*r_h;
@@ -89,7 +89,7 @@ psi_mid         = psi;                      % Assumed stage loading coefficient
 phi_mid         = phi;                      % Assumed flow coefficient
 DF_r            = linspace(0.45,0.45,N)';   % Assumed stator diffusion factor
 DF_s            = linspace(0.45,0.45,N)';   % Assumed rotor diffusion factor
-p               = 1.1;                      % psi distribution exponent (0 - forced, 2 - free)
+p               = 1.0;                      % psi distribution exponent (0 - forced, 2 - free)
 % External flow conditions
 Vinf            = 0;                        % Forward velocity of propulsor
 
@@ -101,3 +101,7 @@ MetalAngles;
 
 %% Print Blades
 PrintGeometry;
+
+figure; hold on; grid on; box on; axis equal;
+mesh(squeeze(r_XYZ(:,1,:)),squeeze(r_XYZ(:,3,:)),squeeze(r_XYZ(:,2,:)));
+mesh(squeeze(s_XYZ(:,1,:)),squeeze(s_XYZ(:,3,:)),squeeze(s_XYZ(:,2,:)));

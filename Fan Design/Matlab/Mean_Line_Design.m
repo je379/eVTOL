@@ -122,6 +122,7 @@ R               = 1-0.5*(phi(ceil(n/2))^2/psi(ceil(n/2)))*(tan(alpha2(N_mid))^2)
 %% Plot Velocity Triangles
 C_y             = 1.5*Vx(1);
 j_range         = ceil(linspace(1,N,3));
+
 for i = 1:3
     j                   = j_range(i);
     C_x                 = 2*(i-1)*U_m;

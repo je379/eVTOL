@@ -6,7 +6,7 @@ function [r_cCRIT, r_h, phi, psi, omega, OPThrust, sig] = OptimiseMass(payload)
 global n
 
 % ND Coefficients
-phi         = 0.8;         % FLOW COEFFICIENT          
+phi         = 0.75;         % FLOW COEFFICIENT          
 psi         = 0.2;         % STAGE LOADING
 
 % Nominal Geometry

@@ -41,18 +41,45 @@ for n1=1:length(file_name)
     rotor_offset   = 0.0125 - Z_rot;
     stator_offset  = 0.037318- Z_stat;
     
-    sweepangle = 5;
-    dz = (r_c/2)*tan(2*pi*sweepangle/360); p = polyfit([0 0.5 1],[0 dz 0],2);
-    dz_sec = polyval(p,linspace(0,1,21));
-    zroffset = rotor_offset*ones([1,21]) + dz_sec;
+    tipangle = 10;
+    leangle = 40;
     
+    % Tip offset ('winglet', y direction)
+    dtips = (r_c/5)*tan(2*pi*tipangle/360);
+    p = polyfit([0 0.15 0.25 0.45 0.65 1],[0 dtips*(0.15/0.65) dtips*(0.25/0.65) dtips*(0.45/0.65) dtips 0],5);
+    dtips_offset = 0.8*polyval(p,linspace(0,1,21));
+    
+    % Leading edge offset (z direction)
+%     dle = (r_c/8)*tan(2*pi*leangle/360);
+%     p = polyfit([0 0.1 0.2 0.3 0.5 0.7 0.8 0.9 1],[-0.2*dle 0.2*dle 0.5*dle 0.6*dle 0.65*dle 0.6*dle 0.5*dle 0.2*dle -0.3*dle],5);
+    dle = 1.25*(r_c/5)*tan(2*pi*tipangle/360);
+    p = polyfit([0 0.25 0.45 0.6 0.85 1],[0 dle*(0.15/0.65) dle*(0.25/0.65) dle*(0.45/0.65) dle 0],5);
+    
+    dle_offset = linspace(-10e-3, 0,21) + polyval(p,linspace(0,1,21));
+%     dle_offset = 0;
+    
+    figure(10); plot(linspace(r_h,r_c,21),dle_offset); axis equal; title('Leading Edge Offset');
+    
+    zroffset = rotor_offset*ones([1,21]) + dle_offset; 
+    yroffset = -dtips_offset;
+    figure; plot(linspace(r_h,r_c,21),dtips_offset); axis equal; title('Tip Offset');
+    
+%     zroffset = rotor_offset*ones([1,21]);
+%     yroffset = rotor_offset*zeros([1,21]);
+        
     for stepi = 1:21
 %     disp(stator_offset);
         r_s_steps(:,3,stepi)  = zroffset(stepi) + r_s_steps(:,3,stepi);
         r_p_steps(:,3,stepi)  = zroffset(stepi) + r_p_steps(:,3,stepi);
         
+        r_s_steps(:,2,stepi)  = r_s_steps(:,2,stepi) + yroffset(stepi);
+        r_p_steps(:,2,stepi)  = r_p_steps(:,2,stepi) + yroffset(stepi);
+        
         r_XYZ1(:,3,stepi)    = zroffset(stepi) + r_XYZ1(:,3,stepi);
         r_XYZ2(:,3,stepi)    = zroffset(stepi) + r_XYZ2(:,3,stepi);
+        
+        r_XYZ1(:,2,stepi)    = r_XYZ1(:,2,stepi) + yroffset(stepi);
+        r_XYZ2(:,2,stepi)    = r_XYZ2(:,2,stepi) + yroffset(stepi);
     end
     
     s_s_steps(:,3,:)  = stator_offset + s_s_steps(:,3,:);
