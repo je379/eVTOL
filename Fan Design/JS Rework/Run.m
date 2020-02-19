@@ -36,13 +36,13 @@ p = 'constangle';
 % 3 = PSI AVERAGED
 % 4 = PSI*RADIUS AVERAGED
 
-R_POS = 3;
+R_POS = 2;
 
 switch R_POS
     case 1 % MASS AVERAGE
         rm = sqrt(0.5*(rc^2 + rh^2));
     case 2 % FRACTION OF SPAN
-        midlineposition = 0.4585;                 % Fraction of span
+        midlineposition = 0.5;                 % Fraction of span
         rm = rh + (rc-rh)*midlineposition;
     case 3 % PSI AVERAGE
         rm = sqrt(2*(rc^2 * rh^2)/(rc^2 + rh^2));

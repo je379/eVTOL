@@ -30,11 +30,11 @@ switch p
 end
 
 % Set sweep and lean offsets
-offset.z = blade.zoffset*ones([1,blade.sections]) + dz_offset; 
-offset.y = -dy_offset;
+% offset.z = blade.zoffset.*ones([1,blade.sections]) + dz_offset; 
+% offset.y = -dy_offset;
 
-% offset.z = rotor_offset*ones([1,21]);
-% offset.y = zeros([1,21]);
+offset.z = blade.zoffset.*ones([1,blade.sections]);
+offset.y = zeros([1,blade.sections]);
 
 
 end

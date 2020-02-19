@@ -7,19 +7,19 @@ switch p
         % Distributed values
         psidist        = psi.m .* (rm ./ r) .^ 2;
         phidist        = phi.m .* (rm ./ r);
-        2
+        psi.p = 0;
     case 'forced'
         % Distributed values
         psidist        = psi.m .* r .^ 0;
         phidist        = phi.m .* (rm ./ r);
-        0
+        psi.p = 0;
     case 'constangle'
         % Solution of form phi = phi.m.*r^(-B/A)
         A = 1 + (psi.m/phi.m).^2; B = 1 + 2*(psi.m/phi.m).^2;
         % Distributed
         phidist = phi.m .* (rm ./ r) .^ (B/A);
         psidist = psi.m .* (rm ./ r) .^ (B/A);
-        B/A
+        psi.p = B/A;
 end
 
 psi_tsdist      = 2.*psidist - phidist.^2;
