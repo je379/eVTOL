@@ -1,16 +1,14 @@
-function Deviation(TYPE)
+function [V, angle, R, S, carter, delta] = Deviation(TYPE, V, angle, phi, psi, R, S)
 %% Calculate Deviation (type = 'airfoil' or 'blade')
 % Deviation estimated using Carter's rule
-
-global angle V phi psi R S delta carter
 
 %% Inlet metal angle
 switch TYPE
     case 'blade'        
         % Carter's Rule
-        [angle.m V.m, R.m, S.m, delta.m, carter.m] = Carter(angle.m, V.m); % Midline
-        [angle.sec V.sec, R.sec, S.sec, delta.sec, carter.sec] = Carter(angle.sec, V.sec); % Section
-        [angle.span V.span, R.span, S.span, delta.span, carter.span] = Carter(angle.span, V.span); % Span
+        [angle.m, V.m, R.m, S.m, delta.m, carter.m] = Carter(angle.m, V.m); % Midline
+        [angle.sec, V.sec, R.sec, S.sec, delta.sec, carter.sec] = Carter(angle.sec, V.sec); % Section
+        [angle.span, V.span, R.span, S.span, delta.span, carter.span] = Carter(angle.span, V.span); % Span
         
     case 'airfoil'
         %% Fan aerofoil assumption

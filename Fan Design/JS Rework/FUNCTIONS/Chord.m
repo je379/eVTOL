@@ -1,11 +1,9 @@
-function [blade] = Chord(blade, radius, sections)
+function [blade] = Chord(blade, radius, sections, rc, rh, rm)
 %% Return chord distribution and number of blades
 % 
-a =
-global rc rh rm AR
 
 % Midline chord
-blade.m.chord        = (rc - rh)./AR;
+blade.m.chord        = (rc - rh)./blade.AR;
 
 % Midline pitch
 blade.m.pitch        = blade.m.chord .* blade.m.pitchchord;

@@ -1,8 +1,6 @@
-function [R,T,Z,shiftvary] = stackblade(bezier_chi1,bezier_chi2,bezier_c,N_bezier,bladetype)
+function [R,T,Z,shiftvary] = stackblade(bezier_chi1,bezier_chi2,bezier_c,N_bezier,bladetype,rc,rh)
 % Find B-spline interpolated blade by stacking many 2-D sections
 % and convert the curved blade coordinates into Cartesians
-
-global rh rc
 
 flagplot = 1;
 

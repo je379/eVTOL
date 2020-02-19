@@ -1,4 +1,4 @@
-function [blade] = Blades(blade, filepath)
+function [blade] = Blades(blade, p)
 %% Return complete blade structure
 % [blade] = Blades(blade)
 NUMBEROFSECTIONS = 21;
@@ -10,13 +10,13 @@ NUMBEROFSECTIONS = 21;
 blade.zoffset = blade.z - min(min(squeeze(blade.s_steps(:,3,:))));
 
 % Get offset distributions due to sweep and lean
-[offset] = SweepLean(blade);
+[offset] = SweepLean(blade,p);
 
 blade.zoffset = offset.z;
 blade.yoffset = offset.y;
 clear offset;
 
-for stepi = 1:21
+for stepi = 1:blade.sections
     blade.s_steps(:,3,stepi)  = blade.zoffset(stepi) + blade.s_steps(:,3,stepi);
     blade.p_steps(:,3,stepi)  = blade.zoffset(stepi) + blade.p_steps(:,3,stepi);
 
@@ -40,7 +40,7 @@ clear blade.XYZ1 clear blade.XYZ2;
 
 % Get centerline values
 clzoffset = blade.zoffset;
-clradius = linspace(blade.sec.radius(1), blade.sec.radius(end), NUMBEROFSECTIONS);
+clradius = linspace(blade.sec.radius(1), blade.sec.radius(end), blade.sections);
 blade.centerline = [clradius.',clyoffset.',clzoffset.'] .* 1000; % mm
 
 %% Write .ibl in X,Y,Z (STATOR)

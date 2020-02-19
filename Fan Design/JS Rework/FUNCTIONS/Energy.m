@@ -1,8 +1,6 @@
-function [] = Energy()
+function [power, thrust, mass, phi, psi, FOM] = Energy(V, phi, psi, radius, omega, rho)
 %% Calculate work done, thrust, mass flow
 % 
-
-global radius phi psi omega power thrust mass rho V
 
 %% Mass-Av Stagnation Enthaply Rise
 
@@ -28,5 +26,5 @@ psi.massav  = sum((h0 ./ ((omega .* radius).^2)) .* mass.dm) ./ mass.total;
 phi.massav  = sum((V.span.x ./ (omega .* radius)) .* mass.dm) ./ mass.total;
 
 %% Figure of merit
-FOM = ( thrust ./ power ) .* sqrt(thrust ./ (2 .* rho .* sum(mass.dA)))
+FOM = ( thrust ./ power ) .* sqrt(thrust ./ (2 .* rho .* sum(mass.dA)));
 end

@@ -4,29 +4,30 @@ clear all;
 close all;
 
 %% Set globals
-global phi psi psi_ts rc rh rm omega angle V p R S delta carter rho mass power thrust sections radius AR
-
 rho = 1.225;
 
-phi.m = 0.8;
+phi.m = 0.6;
 psi.m = 0.4;
 psi_ts.m = 2*psi.m - phi.m^2;      % Total to Total stage loading = p02 - p01 / (0.5*rho*U^2)
 
-omega = RPM2RADS(7500);
+omega = RPM2RADS(5000);
 
 rc = 60e-3;
 rh = 20e-3;
 
-AR = 1.8;
+R.AR = 1.8;
+S.AR = 1.8;
 
 filepath = [pwd, '/Geometry/'];
 
 R.type = 'rotor';
 S.type = 'stator';
+
+DESIGNSECTIONS = 5;
 %% VORTEX CONDITION
 % 'free'; 'forced'; 'constangle';
 
-p = 'free';
+p = 'constangle';
 
 %% Set PSI distribution
 
@@ -50,20 +51,20 @@ switch R_POS
 end
 
 %% Calculate flow angles and velocities
-VelocitiesAngles;
+[V, ang, phi, psi, psi_ts, radius, sections] = VelocitiesAngles(DESIGNSECTIONS, omega, phi, psi, psi_ts, rc, rh, rm, p);
 
 %% Calculate delta, metal angles, and pitch to chord ratio
-Deviation('blade');
+[V, ang, R, S, carter, delta] = Deviation('blade', V, ang, phi, psi, R, S);
 
 %% Energy 
-Energy;
+[power, thrust, mass, phi, psi, FOM] = Energy(V, phi, psi, radius, omega, rho);
 
 %% Assemble blade section variables
-[R,S] = Assemble(R,S,angle,sections,radius);
+[R,S] = Assemble(R,S,ang,sections,radius, rc, rh, rm);
 
 %% Blade Shapes
-R = Blades(R,filepath);
-S = Blades(S,filepath);
+R = Blades(R, p);
+S = Blades(S, p);
 
 %% 3D Plot blades
 figure; hold on; grid on; box on; axis equal;
@@ -72,4 +73,4 @@ mesh(squeeze(S.XYZ(:,1,:)),squeeze(S.XYZ(:,3,:)),squeeze(S.XYZ(:,2,:)));
 plot3(S.centerline(:,1,:),S.centerline(:,3,:),S.centerline(:,2,:));
 
 %% Plot
-PLOTFLOW;
+PLOTFLOW(rc, rh, radius, phi, psi, psi_ts, delta, R, S, carter, V, ang);

@@ -20,12 +20,17 @@ angle.chi4 = (abs(angle.a3) - abs(angle.chi3) .* S.m .* S.pitchchord .^ (0.5)) .
 delta.S = angle.chi4 - abs(angle.a3);
 delta.R = angle.chi2 - abs(angle.b2);
 
-delta.S(delta.S > 0) = -10; delta.S(delta.S < -10) = -10;
-delta.R(delta.R > 0) = -10; delta.R(delta.R < -10) = -10;
+% Limit deviation
+%delta.S(delta.S > 0) = -10; delta.S(delta.S < -10) = -10;
+%delta.R(delta.R > 0) = -10; delta.R(delta.R < -10) = -10;
 
+% Recalculate exit angle
 angle.chi2 = abs(angle.b2) + delta.R;
 angle.chi4 = abs(angle.a3) + delta.S;
 
 carter.S = S.m;
 carter.R = R.m;
+
+R.delta = delta.R;
+S.delta = delta.S;
 end

@@ -62,6 +62,9 @@ elseif length(z)==5
 elseif length(z)==7
     r=linspace(0,1,ceil(final_sections/(length(z)-1)));
     bezierbasis=bernsteinMatrix(sections_per_bezie_task,r);
+    
+    R = R.'; z = z.';
+    
     B_1=[R(1:3) z(1:3)];
     B2(1,:) = -1/4*B_1(1,:)+3/2*B_1(2,:)-1/4*B_1(3,:);
     

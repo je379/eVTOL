@@ -1,4 +1,4 @@
-function [R, S] = Assemble(R,S,angle,sections,radius)
+function [R, S] = Assemble(R,S,angle,sections,radius, rc, rh, rm)
 %% Assemble variables required for blade generation
 % [R, S] = Assemble(R,S,angle,sections,radius);
 
@@ -8,8 +8,8 @@ R.sec.chi2 = angle.sec.chi2;
 S.sec.chi1 = angle.sec.chi3;
 S.sec.chi2 = angle.sec.chi4;
 
-R = Chord(R, radius, sections);
-S = Chord(S, radius, sections);
+R = Chord(R, radius, sections, rc, rh, rm);
+S = Chord(S, radius, sections, rc, rh, rm);
 
 R.sec.radius = sections;
 S.sec.radius = sections;
