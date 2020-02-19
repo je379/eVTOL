@@ -5,21 +5,21 @@ function [blade] = Chord(blade, radius, sections)
 global rc rh rm AR
 
 % Midline chord
-blade.lmid        = (rc - rh)./AR;
+blade.m.chord        = (rc - rh)./AR;
 
 % Midline pitch
-blade.smid        = blade.lmid .* blade.m.sl;
+blade.m.pitch        = blade.m.chord .* blade.m.pitchchord;
 
 % Blade number
-blade.N         = 2 * pi * rm ./ blade.smid;
+blade.N         = 2 * pi * rm ./ blade.m.pitch;
 
 % Spanwise pitch
-blade.sec.s         = 2*pi .* sections ./ blade.N;
-blade.span.s         = 2*pi .* radius ./ blade.N;
+blade.sec.pitch        = 2*pi .* sections ./ blade.N;
+blade.span.pitch        = 2*pi .* radius ./ blade.N;
 
 % Spanwise chord
-blade.sec.l         = blade.sec.s ./ blade.sec.sl;
-blade.span.l         = blade.span.s ./ blade.span.sl;
+blade.sec.chord        = blade.sec.pitch./ blade.sec.pitchchord;
+blade.span.chord        = blade.span.pitch./ blade.span.pitchchord;
 
-blade.sl = blade.m.sl;
+blade.pitchchord = blade.m.pitchchord;
 end

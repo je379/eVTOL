@@ -1,6 +1,6 @@
-function [steps1,steps2,sections,pointspersection,XYZ1,XYZ2] = KON_Make_Blade(chi1,chi2,Radii,c,bladetype,file_name)
+function [steps1,steps2,sections,pointspersection,XYZ1,XYZ2] = KON_Make_Blade(chi1,chi2,Radii,c,bladetype,file_name,NUMBEROFSECTIONS)
 % USE bezier spline to convert the 3 section to 21 subsections =(21+1)/2
-final_sections = 21;
+final_sections = NUMBEROFSECTIONS;
 N_bezier = length(chi1)-1;
 [bezier_chi1]       = bezierspline(chi1,Radii,final_sections);
 [bezier_chi2]       = bezierspline(chi2,Radii,final_sections);
