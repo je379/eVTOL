@@ -42,11 +42,9 @@ xcamber=r*sin(chi1)-r*sin(chi1-theta);
 ycamber=r*cos(chi1-theta)-r*cos(chi1);
 xbladetop = r*sin(chi1)-(r+t).*sin(chi1-theta);
 ybladetop = (r+t).*cos(chi1-theta)-r*cos(chi1);
-
 % Bottom blade surface
 xbladebot = r*sin(chi1)-(r-t).*sin(chi1-theta);
 ybladebot = (r-t).*cos(chi1-theta)-r*cos(chi1);
-
 % Trailing Edge circle
 xdiffend=xbladetop(end)-xbladetop(end-1);
 ydiffend=ybladetop(end)-ybladetop(end-1);
@@ -62,7 +60,6 @@ scalarprod=xdiffend*xrad+ydiffend*yrad;
 xcircTE=xcentre(icentre);
 ycircTE=ycentre(icentre);
 radiuste=sqrt((xbladetop(end)-xcircTE)^2+(ybladetop(end)-ycircTE)^2);
-
 % Update the camber line to add last point consisting in TE
 exte=ydia/sqrt(xdia^2+ydia^2);
 eyte=-xdia/sqrt(xdia^2+ydia^2);
@@ -70,24 +67,20 @@ xte=xcircTE+radiuste*exte;
 yte=ycircTE+radiuste*eyte;
 xcamber=[xcamber xte];
 ycamber=[ycamber yte];
-
 % Work out the length of camber line and set this equal to chord c
 dx=diff(xcamber);
 dy=diff(ycamber);
 ds=sqrt(dx.^2+dy.^2);
 s=sum(ds);
 scalefactor=s/c;
-
 % Now add the circular TE
 xtopte=linspace(xbladetop(end),xcircTE+radiuste,Ntopte);
 xbotte=linspace(xbladebot(end),xcircTE+radiuste,Nbotte);
 ytopte=real(ycircTE+sqrt(radiuste^2-(xtopte-xcircTE).^2));
 ybotte=real(ycircTE-sqrt(radiuste^2-(xbotte-xcircTE).^2));
-
 % Group coordinates into xblade, yblade
 xblade=[xbladetop xtopte(2:end) xbotte(end-1:-1:2) xbladebot(end:-1:1)];
 yblade=[ybladetop ytopte(2:end) ybotte(end-1:-1:2) ybladebot(end:-1:1)];
-
 % Translate the blade coordinates to have centroid at (0,0) and then scale
 xblade=xblade-xcamber(ii);  % add stacking line lean/sweep f(R)
 yblade=yblade-ycamber(ii);

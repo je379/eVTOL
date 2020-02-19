@@ -19,14 +19,14 @@ rh = 20e-3;
 
 AR = 1.8;
 
-filepath = [pwd, '/Geometry'];
+filepath = [pwd, '/Geometry/'];
 
 R.type = 'rotor';
 S.type = 'stator';
 %% VORTEX CONDITION
 % 'free'; 'forced'; 'constangle';
 
-p = 'constangle';
+p = 'free';
 
 %% Set PSI distribution
 
@@ -52,7 +52,6 @@ end
 %% Calculate flow angles and velocities
 VelocitiesAngles;
 
-
 %% Calculate delta, metal angles, and pitch to chord ratio
 Deviation('blade');
 
@@ -63,8 +62,14 @@ Energy;
 [R,S] = Assemble(R,S,angle,sections,radius);
 
 %% Blade Shapes
-R = Blades(R.sec);
-S = Blades(S.sec);
+R = Blades(R,filepath);
+S = Blades(S,filepath);
+
+%% 3D Plot blades
+figure; hold on; grid on; box on; axis equal;
+mesh(squeeze(R.XYZ(:,1,:)),squeeze(R.XYZ(:,3,:)),squeeze(R.XYZ(:,2,:)));
+mesh(squeeze(S.XYZ(:,1,:)),squeeze(S.XYZ(:,3,:)),squeeze(S.XYZ(:,2,:)));
+plot3(S.centerline(:,1,:),S.centerline(:,3,:),S.centerline(:,2,:));
 
 %% Plot
-% PLOTFLOW;
+PLOTFLOW;

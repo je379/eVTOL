@@ -1,6 +1,6 @@
 %% Plot PSI/PHI Distirubutions
 
-global phi psi psi_ts rc rh radius delta R angle V 
+global phi psi psi_ts rc rh radius delta R S angle V 
 
 x = (radius-rh)./(rc-rh);
 
@@ -25,7 +25,7 @@ plot(delta.span.R,x,'b');plot(delta.span.S,x,'r');legend('Rotor','Stator');
 
 subplot(1,6,5);
 hold on; title('s/l (Pitch-Chord)'); ylabel('% of Span'); xlabel('s/l');
-plot(R.span.sl,x);plot(S.span.sl,x);legend('Rotor','Stator');
+plot(R.span.pitchchord,x);plot(S.span.pitchchord,x);legend('Rotor','Stator');
 
 subplot(1,6,6);
 hold on; title('m (Carter variable)'); ylabel('% of Span'); xlabel('m');

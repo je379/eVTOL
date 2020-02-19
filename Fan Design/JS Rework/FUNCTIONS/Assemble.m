@@ -16,4 +16,10 @@ S.sec.radius = sections;
 
 R.z = 0.0125;
 S.z = 0.037318;
+
+R.sweep = 10;
+S.sweep = 0;
+
+R.lean = 40;
+S.lean = 0;
 end

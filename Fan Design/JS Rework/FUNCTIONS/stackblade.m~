@@ -1,4 +1,4 @@
-function [R,T,Z,shiftvary] = stackblade(bezier_chi1,bezier_chi2,bezier_c,N_bezier,bladetype)
+function [R,T,Z,shiftvary] = stackblade(bezier_chi1,bezier_chi2,bezier_c,N_bezier,bladetype,file_name)
 % Find B-spline interpolated blade by stacking many 2-D sections
 % and convert the curved blade coordinates into Cartesians
 
@@ -25,7 +25,7 @@ for i = 1:N_bezier
     end
 end
 
-save([pwd '/Geometry/' bladetype '.mat'],'r','chi1d','chi2d', 'c')
+save([file_name '_' bladetype '.mat'],'r','chi1d','chi2d', 'c')
 N = length(c);
 
 % Loop over radial direction and create a new blade section at every go
@@ -34,9 +34,9 @@ count = 0;
 % Stator Shape
 theta1 = 25*pi/180;
 theta2 = 10*pi/180;
-ac = (tan(theta1)+tan(theta2))/(2*rh-2*rc);
+ac = (tan(theta1)+tan(theta2))/(2*r_h-2*r_c);
 bc = tan(theta1)-2*ac*rh;
-cc = -ac*rh^2-bc*rh;
+cc = -ac*r_h^2-bc*rh;
 
 for i=1:N
     [xblade,yblade]=bladecentroid(chi1d(i),chi2d(i),c(i),bladetype);

@@ -6,7 +6,7 @@ function DHR = VelocitiesAngles()
 global phi psi psi_ts rc rh rm omega radius angle sections V p rho mass power thrust
 
 radius = linspace(rh, rc, 99999);
-sections = [rh rm rc];
+sections = linspace(rh, rc, 5);
 
 %% Radial Equilibrium Function solutions
 
