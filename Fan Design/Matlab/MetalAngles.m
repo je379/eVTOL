@@ -21,9 +21,11 @@ alpha2          = atand(V2_theta/Vx);
 %% Rotor inlet/outlet angles
 r.chi1          = abs(beta1)-r.I1;
 
-m               = 0.23*(2*ac_r).^2 + abs(alpha2)/500;        % m for Carter's rule
+
+m               = 0.23*(2*ac_r).^2 + abs(beta2)/500;        % m for Carter's rule
 
 r.chi2          = (abs(beta2) - m .* r.chi1 .* sc_r .^ 0.5) ./ (1-m.*sc_r.^0.5);
+% r.chi2          = abs(beta2);
 
 %% Stator inlet/outlet angles
 s.chord         = c_s;
@@ -32,7 +34,7 @@ s.chi2          = alpha2-s.I2;        % Stator inlet based on absolute flow angl
 s.chi3          = linspace(0,0,N)';     % Stator exit flow is axial
 
 %% Deviation and camber
-delta = abs(alpha2)-r.chi2;                  % Calculate deviation
+delta = abs(beta2)-r.chi2;                  % Calculate deviation
 theta = r.chi1-r.chi2;                  % Calculate camber
 
 %% Save design parameters

@@ -57,19 +57,20 @@ for n1=1:length(file_name)
     dle = 1.25*(r_c/5)*tan(2*pi*tipangle/360);
     pv = polyfit([0 0.25 0.45 0.6 0.85 1],[0 dle*(0.15/0.65) dle*(0.25/0.65) dle*(0.45/0.65) dle 0],5);
     dle_offset = polyval(pv,linspace(0,1,21));
-%     switch p
-%         case 1
-%             % MID- FREE AND FORCE VORTEX
-%             dle_offset = polyval(pv,linspace(0,1,21));
-%         case 2
-%             % FREE VORTEX
-%             dle_offset = linspace(-10e-3, 0,21) + polyval(pv,linspace(0,1,21));
-%     end
-%     
-    % Set sweep and lean offsets
-    zroffset = rotor_offset*ones([1,21]) + dle_offset; 
-    yroffset = -dtips_offset;
+    switch p
+        case 1
+            % MID- FREE AND FORCE VORTEX
+            dle_offset = polyval(pv,linspace(0,1,21));
+        case 2
+            % FREE VORTEX
+            dle_offset = linspace(-13e-3, 5e-3,21) + polyval(pv,linspace(0,1,21));
+    end
     
+    % Set sweep and lean offsets
+%     zroffset = rotor_offset*ones([1,21]) + dle_offset; 
+%     yroffset = -dtips_offset;
+    zroffset = rotor_offset*ones([1,21]);
+    yroffset = zeros([1,21]);
     % Plot sweep and lean curves
     figure(11); plot(linspace(r_h,r_c,21),dtips_offset); axis equal; title('Tip Offset');
     figure(10); plot(linspace(r_h,r_c,21),dle_offset); axis equal; title('Leading Edge Offset');

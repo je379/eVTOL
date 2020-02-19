@@ -12,15 +12,22 @@ function [rblades,sblades,sc_r,sc_s,c_r,c_s] = BladeNumber(AR_rotor,AR_stator,DF
     sc_r            = ones(5,1);
     sc_s            = ones(5,1);
     for i = 1:N
+        
         % Angles
         a1              = angles(i,2);
         a2              = angles(i,4);
         a3              = angles(i,3);
-        a4              = angles(i,1); 
+        a4              = angles(i,1);
+        
+        
         % Rotor Pitch to Chord Ratio
-        [sc_r(i)]       = (DF_r(i)+cos(a1)/cos(a2)-1)/(0.5*cos(a1)*abs(tan(a1)-tan((a2))));
+        [sc_r(i)]       = (DF_r(i)+cos(a1)/cos(a2)-1) / (0.5 * cos(a1) * ( tan(abs(a1))-tan(abs(a2)) ) );
+        
+        
         % Stator Pitch to Chord Ratio
-        [sc_s(i)]       = (DF_s(i)+cos(a3)/cos(a4)-1)/(0.5*cos(a3)*abs(tan(a3)-tan((a4))));
+        [sc_s(i)]       = (DF_s(i)+cos(a3)/cos(a4)-1) / (0.5*cos(a3)*abs(tan(a3)-tan((a4))));
+        
+        
     end
     % Pitch (Blade Spacing)
     N_mid           = ceil(N/2);            % Index of mid-blade radius

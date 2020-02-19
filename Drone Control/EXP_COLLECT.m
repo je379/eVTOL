@@ -34,7 +34,12 @@ close all;
 % 08, 10, 12
 % 08S, 10S, 12S
 % 08L, 10L, 12L
-SIGMANAME = '12S'; 
+SIGMANAME = 'R10';
+if strcmp(SIGMANAME(1), 'R')
+    sigma = 0.6; % [0.8, 1.0 1.2649]
+    intake = 'LONG';
+    exit = 'SHORT';
+end
 pwm = 2000;
 
 LCfit = load('LC_FIT.mat','LC_cal');
@@ -126,7 +131,7 @@ else
     nomV = 12;
 end
 
-save('EXP_META', 'pwm','SIGMANAME','nomV');
+save('EXP_META', 'pwm','SIGMANAME','nomV','intake','exit','sigma');
 save('EXP_OP', 'FOM', 'P', 'T', 'mass', 'rpmmean');
 
 clear all;

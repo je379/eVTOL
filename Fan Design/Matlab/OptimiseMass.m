@@ -6,8 +6,8 @@ function [r_cCRIT, r_h, phi, psi, omega, OPThrust, sig] = OptimiseMass(payload)
 global n
 
 % ND Coefficients
-phi         = 0.75;         % FLOW COEFFICIENT          
-psi         = 0.2;         % STAGE LOADING
+phi         = 0.6;         % FLOW COEFFICIENT          
+psi         = 0.4;         % STAGE LOADING
 
 % Nominal Geometry
 r_h         = 20e-3;        % HUB RADIUS
@@ -18,7 +18,7 @@ turboL = 70e-3;
 inletL = 20e-3;
 
 % Motor Speed
-rpm         = 7500;         % NOMINAL MOTOR SPEED
+rpm         = 6000;         % NOMINAL MOTOR SPEED
 
 % Motor parameters
 kv          = 750;         % KV CONSTANT
@@ -34,9 +34,9 @@ motormass   = 0.087;
 % Variables to plot
 variables = 'phipsi';
 mesh = 0;
-chics = 1;
-diffplot = 1;
-plott = 0;
+chics = 0;
+diffplot = 0;
+plott = 1;
 
 OUTPUT = 0;
 

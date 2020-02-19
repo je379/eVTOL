@@ -25,6 +25,7 @@ end
 % Reset values
 phi_m           = 0;
 psi_m           = 0;
+
 % Integrate for mass averaged phi and psi
 for i = 1:n
     psi_m       = psi_m+(1/mdot)*dh_0(i)/U(i)^2*rho*V_x(i)*2*pi*r_temp(i)*dr;
@@ -105,6 +106,7 @@ V1_abs          = Vx ./ cos(alpha1);
 V1_theta        = Vx .* tan(alpha1);
 V1_rel          = Vx ./ cos(beta1);
 V1_theta_rel    = Vx .* tan(beta1);
+
 % Rotor outlet
 V2_abs          = Vx./cos(alpha2);
 V2_theta        = Vx.*tan(alpha2);
