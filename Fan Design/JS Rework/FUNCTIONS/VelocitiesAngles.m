@@ -1,4 +1,4 @@
-function [V, ang, phi, psi, psi_ts, radius, sections] = VelocitiesAngles(DESIGNSECTIONS, omega, phi, psi, psi_ts, rc, rh, rm, p)
+function [V, ang, phi, psi, psi_ts, radius, sections, reaction] = VelocitiesAngles(DESIGNSECTIONS, omega, phi, psi, psi_ts, rc, rh, rm, p)
 %% Mean line design (2D section design)
 % Set location of 'meanline' with 'r'
 % Assume axial inlet and exit flow
@@ -13,10 +13,14 @@ sections = linspace(rh, rc, DESIGNSECTIONS);
 
 %% Velocity Triangles and Flow Angles
 
-[ang.m, V.m] = Flow(rm, omega, phi.m, psi.m); % Midline
-[ang.sec, V.sec] = Flow(sections, omega, phi.sec, psi.sec); % Sections
-[ang.span, V.span] = Flow(radius, omega, phi.span, psi.span); % Span
+[ang.m, V.m, reaction.m] = Flow(rm, omega, phi.m, psi.m); % Midline
+[ang.sec, V.sec, reaction.sec] = Flow(sections, omega, phi.sec, psi.sec); % Sections
+[ang.span, V.span, reaction.span] = Flow(radius, omega, phi.span, psi.span); % Span
 
 %% De Hallers rule: c2/c1 >= 0.72
 % DHR = V.sec.rel2 ./ V.sec.rel1;
+
+%% Reaction across span
+
+
 end

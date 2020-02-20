@@ -8,6 +8,11 @@ switch p
         psidist        = psi.m .* (rm ./ r) .^ 2;
         phidist        = phi.m .* (rm ./ r);
         psi.p = 0;
+    case 'custom'
+        % Distributed values
+        psidist        = psi.m .* (rm ./ r) .^ 1.1;
+        phidist        = phi.m .* (rm ./ r);
+        psi.p = 1.1;
     case 'forced'
         % Distributed values
         psidist        = psi.m .* r .^ 0;

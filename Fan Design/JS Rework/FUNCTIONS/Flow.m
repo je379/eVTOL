@@ -1,4 +1,4 @@
-function [angle, V] = Flow(r, omega, phi, psi)
+function [angle, V, reaction] = Flow(r, omega, phi, psi)
 
 % Return velocities
 V.x         = (r .* omega) .* phi;
@@ -19,4 +19,7 @@ angle.i3    = 0;
 V.abs1      = V.x ./ cosd(angle.a1);
 V.abs2      = V.x ./ cosd(angle.a2);
 V.rel2      = V.x ./ cosd(angle.b2);
+
+% Reaction
+reaction = 1-0.5*(phi.^2./psi).*(tand(angle.a2).^2);
 end

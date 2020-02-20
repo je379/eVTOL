@@ -6,11 +6,11 @@ close all;
 %% Set globals
 rho = 1.225;
 
-phi.m = 0.6;
-psi.m = 0.4;
+phi.m = 0.75;
+psi.m = 0.25;
 psi_ts.m = 2*psi.m - phi.m^2;      % Total to Total stage loading = p02 - p01 / (0.5*rho*U^2)
 
-omega = RPM2RADS(5000);
+omega = RPM2RADS(6000);
 
 rc = 60e-3;
 rh = 20e-3;
@@ -51,7 +51,7 @@ switch R_POS
 end
 
 %% Calculate flow angles and velocities
-[V, ang, phi, psi, psi_ts, radius, sections] = VelocitiesAngles(DESIGNSECTIONS, omega, phi, psi, psi_ts, rc, rh, rm, p);
+[V, ang, phi, psi, psi_ts, radius, sections, reaction] = VelocitiesAngles(DESIGNSECTIONS, omega, phi, psi, psi_ts, rc, rh, rm, p);
 
 %% Calculate delta, metal angles, and pitch to chord ratio
 [V, ang, R, S, carter, delta] = Deviation('blade', V, ang, phi, psi, R, S);
@@ -66,11 +66,5 @@ end
 R = Blades(R, p);
 S = Blades(S, p);
 
-%% 3D Plot blades
-figure; hold on; grid on; box on; axis equal;
-mesh(squeeze(R.XYZ(:,1,:)),squeeze(R.XYZ(:,3,:)),squeeze(R.XYZ(:,2,:)));
-mesh(squeeze(S.XYZ(:,1,:)),squeeze(S.XYZ(:,3,:)),squeeze(S.XYZ(:,2,:)));
-plot3(S.centerline(:,1,:),S.centerline(:,3,:),S.centerline(:,2,:));
-
 %% Plot
-PLOTFLOW(rc, rh, radius, phi, psi, psi_ts, delta, R, S, carter, V, ang);
+PlotFlow(rc, rh, radius, sections, phi, psi, psi_ts, delta, R, S, carter, V, ang, omega, reaction);
