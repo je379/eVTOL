@@ -3,10 +3,13 @@
 clear all;
 close all;
 
+global plotflag
+plotflag = 1;
+
 %% Set globals
 rho = 1.225;
 
-phi.m = 0.75;
+phi.m = 0.8;
 psi.m = 0.25;
 psi_ts.m = 2*psi.m - phi.m^2;      % Total to Total stage loading = p02 - p01 / (0.5*rho*U^2)
 
@@ -18,6 +21,7 @@ rh = 20e-3;
 R.AR = 1.8;
 S.AR = 1.8;
 
+%% Continue 
 filepath = [pwd, '/Geometry/'];
 
 R.type = 'rotor';
@@ -27,7 +31,13 @@ DESIGNSECTIONS = 5;
 %% VORTEX CONDITION
 % 'free'; 'forced'; 'constangle';
 
-p = 'constangle';
+p = 'custom';
+
+if strcmp(p, 'custom')
+    pp = 1.3;
+else
+    pp = 0;
+end
 
 %% Set PSI distribution
 
@@ -36,7 +46,7 @@ p = 'constangle';
 % 3 = PSI AVERAGED
 % 4 = PSI*RADIUS AVERAGED
 
-R_POS = 2;
+R_POS = 1;
 
 switch R_POS
     case 1 % MASS AVERAGE
@@ -50,8 +60,11 @@ switch R_POS
         rm = 2*(1/rc + 1/rh)^(-1);
 end
 
+%% OPTINAL LOAD EXISTING META DATA
+% load('JONNY_RIG.mat');
+
 %% Calculate flow angles and velocities
-[V, ang, phi, psi, psi_ts, radius, sections, reaction] = VelocitiesAngles(DESIGNSECTIONS, omega, phi, psi, psi_ts, rc, rh, rm, p);
+[V, ang, phi, psi, psi_ts, radius, sections, reaction, pc] = VelocitiesAngles(DESIGNSECTIONS, omega, phi, psi, psi_ts, rc, rh, rm, p, pp);
 
 %% Calculate delta, metal angles, and pitch to chord ratio
 [V, ang, R, S, carter, delta] = Deviation('blade', V, ang, phi, psi, R, S);
@@ -67,4 +80,6 @@ R = Blades(R, p);
 S = Blades(S, p);
 
 %% Plot
-PlotFlow(rc, rh, radius, sections, phi, psi, psi_ts, delta, R, S, carter, V, ang, omega, reaction);
+if plotflag == 1
+    PlotFlow(rc, rh, radius, sections, phi, psi, psi_ts, delta, R, S, carter, V, ang, omega, reaction);
+end

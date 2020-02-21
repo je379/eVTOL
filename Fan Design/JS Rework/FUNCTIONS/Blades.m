@@ -64,8 +64,10 @@ fid = fopen(statorcenterlinefile, 'w');
 fprintf(fid,'Closed Index arclength\n');
 fprintf(fid,'begin section\n');
 fprintf(fid,'begin curve\n');
+fprintf(fid,'%f  %f  %f\n', (blade.centerline(1,1)-5),blade.centerline(1,2),blade.centerline(1,3));
 for ss = 1:size(blade.centerline,1)
      fprintf(fid,'%f  %f  %f\n', blade.centerline(ss,1),blade.centerline(ss,2),blade.centerline(ss,3));
 end
+fprintf(fid,'%f  %f  %f\n', (blade.centerline(end,1)+5),blade.centerline(end,2),blade.centerline(end,3));
 fclose(fid);
 end

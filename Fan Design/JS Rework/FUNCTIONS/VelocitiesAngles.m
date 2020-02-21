@@ -1,4 +1,4 @@
-function [V, ang, phi, psi, psi_ts, radius, sections, reaction] = VelocitiesAngles(DESIGNSECTIONS, omega, phi, psi, psi_ts, rc, rh, rm, p)
+function [V, ang, phi, psi, psi_ts, radius, sections, reaction, pc] = VelocitiesAngles(DESIGNSECTIONS, omega, phi, psi, psi_ts, rc, rh, rm, p, pp)
 %% Mean line design (2D section design)
 % Set location of 'meanline' with 'r'
 % Assume axial inlet and exit flow
@@ -8,8 +8,8 @@ sections = linspace(rh, rc, DESIGNSECTIONS);
 
 %% Radial Equilibrium Function solutions
 
-[phi.sec, psi.sec, psi_ts.sec] = Distributions(p, phi, psi, sections, rm); % Section
-[phi.span, psi.span, psi_ts.span] = Distributions(p, phi, psi, radius, rm); % Span
+[phi.sec, psi.sec, psi_ts.sec, pc.sec] = Distributions(p, phi, psi, sections, rm, pp, radius); % Section
+[phi.span, psi.span, psi_ts.span, pc.span] = Distributions(p, phi, psi, radius, rm, pp, radius); % Span
 
 %% Velocity Triangles and Flow Angles
 

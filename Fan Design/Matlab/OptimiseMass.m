@@ -33,7 +33,7 @@ motormass   = 0.087;
 
 % Variables to plot
 variables = 'phipsi';
-mesh = 0;
+mesh = 1;
 chics = 0;
 diffplot = 0;
 plott = 1;

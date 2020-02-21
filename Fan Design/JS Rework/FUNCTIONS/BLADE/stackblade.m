@@ -2,7 +2,7 @@ function [R,T,Z,shiftvary] = stackblade(bezier_chi1,bezier_chi2,bezier_c,N_bezie
 % Find B-spline interpolated blade by stacking many 2-D sections
 % and convert the curved blade coordinates into Cartesians
 
-flagplot = 1;
+global plotflag
 
 r     = [];
 chi1d = [];
@@ -51,7 +51,7 @@ for i=1:N
     T(i,:)=yblade/r(i);
     Z(i,:)=xblade;
      
-    if flagplot == 1
+    if plotflag == 1
     if (i == 1 || i == 10 || i == 21)
         figure(1); subplot(1,2,1); set(gcf, 'Position', [0 320 1500 1000]);
         count   = count + 1;
