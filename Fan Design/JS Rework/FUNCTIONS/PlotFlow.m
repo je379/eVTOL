@@ -94,8 +94,13 @@ subplot(2,6,6);
 hold on; title('Reaction'); ylabel('% of Span'); xlabel('Reaction');
 plot(reaction.span,x, 'k');
 
+%% Chord
+subplot(2,6,10);
+hold on; title('Rotor Chord'); ylabel('% of Span'); xlabel('Chord / mm');
+plot(R.span.chord * 1000,x, 'k');
+
 %% Flow angles
-subplot(2,6,[10 12]);
+subplot(2,6,[11 12]);
 hold on; title('Rotor exit angles'); ylabel('% of Span'); xlabel('Degrees');
 plot(ang.span.b2,x, 'k'); plot(-ang.span.chi2,x, 'b'); legend('\beta_2','\chi_2');
 

@@ -22,6 +22,9 @@ switch p
     case 'constangle'
         % MID- FREE AND FORCE VORTEX
         dz_offset = polyval(pv,linspace(0,1,blade.sections));
+    case 'custom'
+        % MID- FREE AND FORCE VORTEX
+        dz_offset = polyval(pv,linspace(0,1,blade.sections));
     case 'free'
         if strcmp(blade.type, 'rotor');
             % FREE VORTEX

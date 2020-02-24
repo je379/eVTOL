@@ -34,7 +34,7 @@ DESIGNSECTIONS = 5;
 p = 'custom';
 
 if strcmp(p, 'custom')
-    pp = 1.3;
+    pp = 1.5;
 else
     pp = 0;
 end
@@ -83,3 +83,5 @@ S = Blades(S, p);
 if plotflag == 1
     PlotFlow(rc, rh, radius, sections, phi, psi, psi_ts, delta, R, S, carter, V, ang, omega, reaction);
 end
+
+sigma = SIG(phi.m, psi.m);
