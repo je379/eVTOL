@@ -36,8 +36,11 @@ end
 % offset.z = blade.zoffset.*ones([1,blade.sections]) + dz_offset; 
 % offset.y = -dy_offset;
 
-offset.z = blade.zoffset.*ones([1,blade.sections]);
-offset.y = zeros([1,blade.sections]);
-
-
+if strcmp(blade.type, 'rotor')
+    offset.z = blade.zoffset.*ones([1,blade.sections]) + linspace(-5e-3, 2e-3 ,blade.sections) + -1e-3 + dz_offset;
+    offset.y = zeros([1,blade.sections]);
+else
+    offset.z = blade.zoffset.*ones([1,blade.sections]);
+    offset.y = zeros([1,blade.sections]);
+end
 end

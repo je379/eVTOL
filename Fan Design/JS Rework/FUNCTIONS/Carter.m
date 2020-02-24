@@ -23,6 +23,7 @@ delta.R = angle.chi2 - abs(angle.b2);
 % Limit deviation
 %delta.S(delta.S > 0) = -10; delta.S(delta.S < -10) = -10;
 %delta.R(delta.R > 0) = -10; delta.R(delta.R < -10) = -10;
+delta.R = linspace(1,0.75,length(delta.R)) .* delta.R;
 
 % Recalculate exit angle
 angle.chi2 = abs(angle.b2) + delta.R;
