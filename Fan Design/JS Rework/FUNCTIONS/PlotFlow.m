@@ -52,7 +52,7 @@ U2.Y(1:2,:)   = [-V.sec.theta2(linspace(1,end,3)); omega.*VT_rad-V.sec.theta2(li
 plot(U2.X, U2.Y, 'b');
 
 %% PSI/PHI Spanwise Distribution
-figure('Position', [0 320 2560 1200]);
+figure(3); set(gcf,'Position', [0 320 1500 1200]);
 
 subplot(2,6,1);
 hold on; title('\phi (Flow Coefficient)'); ylabel('% of Span'); xlabel('\phi');
@@ -100,7 +100,7 @@ hold on; title('Rotor Chord'); ylabel('% of Span'); xlabel('Chord / mm');
 plot(R.span.chord * 1000,x, 'k');
 
 %% Flow angles
-subplot(2,6,[11 12]);
+subplot(2,6,11);
 hold on; title('Rotor exit angles'); ylabel('% of Span'); xlabel('Degrees');
 plot(ang.span.b2,x, 'k'); plot(-ang.span.chi2,x, 'b'); legend('\beta_2','\chi_2');
 

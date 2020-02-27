@@ -8,6 +8,7 @@ switch p
         psidist        = psi.m .* (rm ./ r) .^ 2;
         phidist        = phi.m .* (rm ./ r);
         psi.p = 0;
+        pc = 0;
     case 'custom' % To get Jonnies Design
         % Distributed values
         psidist        = psi.m .* (rm ./ r) .^ pp;

@@ -26,9 +26,11 @@ switch p
         % MID- FREE AND FORCE VORTEX
         dz_offset = polyval(pv,linspace(0,1,blade.sections));
     case 'free'
-        if strcmp(blade.type, 'rotor');
+        if strcmp(blade.type, 'rotor')
             % FREE VORTEX
-            dz_offset = linspace(-13e-3, 5e-3,blade.sections) + polyval(pv,linspace(0,1,blade.sections));
+            curvepoints = linspace(0,1,blade.sections);
+            curveoffset = (6 - 22*exp(-curvepoints*2))*10^-3;
+            dz_offset = curveoffset + polyval(pv,linspace(0,1,blade.sections));
         end
 end
 
@@ -37,7 +39,7 @@ end
 % offset.y = -dy_offset;
 
 if strcmp(blade.type, 'rotor')
-    offset.z = blade.zoffset.*ones([1,blade.sections]) + linspace(-5e-3, 2e-3 ,blade.sections) + -1e-3 + dz_offset;
+    offset.z = blade.zoffset.*ones([1,blade.sections]);% + dz_offset;% + linspace(-1e-3, 2e-3 ,blade.sections) + -1e-3;
     offset.y = zeros([1,blade.sections]);
 else
     offset.z = blade.zoffset.*ones([1,blade.sections]);

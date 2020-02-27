@@ -18,8 +18,8 @@ omega = RPM2RADS(6000);
 rc = 60e-3;
 rh = 20e-3;
 
-R.AR = 1.8;
-S.AR = 1.8;
+R.AR = 2.5; R.phi = phi.m; R.psi = psi.m;
+S.AR = 1.8; S.phi = phi.m; S.psi = psi.m;
 
 %% Continue 
 filepath = [pwd, '/Geometry/'];
@@ -31,7 +31,7 @@ DESIGNSECTIONS = 5;
 %% VORTEX CONDITION
 % 'free'; 'forced'; 'constangle';
 
-p = 'custom';
+p = 'free';
 
 if strcmp(p, 'custom')
     pp = 1.5;
@@ -50,9 +50,10 @@ R_POS = 1;
 
 switch R_POS
     case 1 % MASS AVERAGE
-        rm = sqrt(0.5*(rc^2 + rh^2));
+        rr = [rc rh];
+        rm = rms(rr);
     case 2 % FRACTION OF SPAN
-        midlineposition = 0.5;                 % Fraction of span
+        midlineposition = 0.4;                 % Fraction of span
         rm = rh + (rc-rh)*midlineposition;
     case 3 % PSI AVERAGE
         rm = sqrt(2*(rc^2 * rh^2)/(rc^2 + rh^2));
@@ -70,7 +71,7 @@ end
 [V, ang, R, S, carter, delta] = Deviation('blade', V, ang, phi, psi, R, S);
 
 %% Energy 
-[power, thrust, mass, phi, psi, FOM] = Energy(V, phi, psi, radius, omega, rho);
+[power, thrust, mass, phi, psi, FOM, P] = Energy(V, phi, psi, radius, omega, rho, rc, rh);
 
 %% Assemble blade section variables
 [R,S] = Assemble(R,S,ang,sections,radius, rc, rh, rm);
